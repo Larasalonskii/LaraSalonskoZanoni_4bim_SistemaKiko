@@ -618,3 +618,75 @@ footer p {
         animation-iteration-count: 1 !important;
     }
 }
+/* Campos adicionais do tom */
+
+.tom-fields-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px;
+}
+
+.tom-fields-grid .form-group select {
+    width: 100%;
+    min-height: 48px;
+    padding: 10px 14px;
+    color: var(--text);
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--r-small);
+    font: inherit;
+}
+
+.tom-image-group {
+    grid-column: 1 / -1;
+}
+
+.tom-image-group input[type="file"] {
+    display: block;
+    width: 100%;
+    min-height: auto;
+    padding: 12px;
+    background: var(--soft);
+    border: 1px dashed var(--pink);
+    border-radius: var(--r-small);
+}
+
+.tom-image-group small {
+    display: block;
+    margin-top: 8px;
+    color: var(--muted);
+}
+
+.tom-image-preview {
+    display: none;
+    width: 150px;
+    height: 150px;
+    margin-top: 14px;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    background: #fff;
+}
+
+.tom-table-image {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+}
+
+.tom-no-image {
+    color: var(--muted);
+    font-size: .82rem;
+}
+
+@media (max-width: 650px) {
+    .tom-fields-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tom-image-group {
+        grid-column: auto;
+    }
+}

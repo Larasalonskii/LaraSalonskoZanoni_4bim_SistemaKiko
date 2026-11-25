@@ -226,7 +226,18 @@ function formatarPreco(valor) {
 function criarCardProduto(produto) {
 
     const card = document.createElement('div');
-    card.classList.add('produto-card');
+
+card.classList.add(
+    'produto-card',
+    'produto-card-clicavel'
+);
+
+card.setAttribute('role', 'link');
+card.setAttribute('tabindex', '0');
+card.setAttribute(
+    'aria-label',
+    `Ver detalhes de ${produto.nome_produto || 'produto'}`
+);
 
     const id = produto.id_produto;
     const nome = produto.nome_produto || 'Produto';
@@ -470,6 +481,36 @@ function criarCardProduto(produto) {
         botaoAdicionar
     );
 
+
+    // Abrir página maior do produto ao clicar no card
+function abrirDetalhesProduto() {
+    window.location.href = `/menu/produto/${id}`;
+}
+
+card.addEventListener('click', (event) => {
+    // Não abrir detalhes ao interagir com os controles do card
+    if (
+        event.target.closest(
+            'button, select, input, label, a'
+        )
+    ) {
+        return;
+    }
+
+    abrirDetalhesProduto();
+});
+
+card.addEventListener('keydown', (event) => {
+    if (
+        event.target !== card ||
+        (event.key !== 'Enter' && event.key !== ' ')
+    ) {
+        return;
+    }
+
+    event.preventDefault();
+    abrirDetalhesProduto();
+});
     return card;
 }
 

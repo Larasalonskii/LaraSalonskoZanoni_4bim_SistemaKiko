@@ -1,163 +1,230 @@
+
 const { query } = require('../database');
 const path = require('path');
 
-// Tamanho máximo do campo nome_tom no banco: character varying(40)
 const MAX_NOME_TOM = 40;
 
 exports.abrirCrudTom = (req, res) => {
-    const usuario = req.cookies.usuarioLogado;
-
-    if (usuario) {
-        res.sendFile(path.join(__dirname, '../../frontend/tom/tom.html'));
-    } else {
-        res.redirect('/login');
+    if (req.cookies.usuarioLogado) {
+        return res.sendFile(
+            path.join(__dirname, '../../frontend/tom/tom.html')
+        );
     }
+
+    return res.redirect('/login');
 };
+
+const SELECT_TONS = `
+    SELECT
+        t.id_tom,
+        t.nome_tom,
+        t.categoria_produto_id_categoria_produto,
+        t.imagem_tom,
+        cp.nome_categoria_produto
+    FROM tom t
+    LEFT JOIN categoria_produto cp
+      ON cp.id_categoria_produto =
+         t.categoria_produto_id_categoria_produto
+`;
+
+function validarDados(body) {
+    const nome_tom = String(body.nome_tom || '').trim();
+    const categoriaId = Number(
+        body.categoria_produto_id_categoria_produto
+    );
+
+    if (!nome_tom) {
+        throw new Error('O nome do tom é obrigatório.');
+    }
+
+    if (nome_tom.length > MAX_NOME_TOM) {
+        throw new Error(
+            `O nome do tom deve ter no máximo ${MAX_NOME_TOM} caracteres.`
+        );
+    }
+
+    if (!Number.isInteger(categoriaId) || categoriaId <= 0) {
+        throw new Error('Selecione a categoria deste tom.');
+    }
+
+    return { nome_tom, categoriaId };
+}
 
 exports.listarTons = async (req, res) => {
     try {
-        const result = await query('SELECT * FROM tom ORDER BY id_tom');
+        const result = await query(
+            `${SELECT_TONS} ORDER BY t.id_tom`
+        );
+
         res.json(result.rows);
     } catch (error) {
         console.error('Erro ao listar tons:', error);
-        res.status(500).json({ error: 'Erro interno do servidor' });
+
+        res.status(500).json({
+            error: 'Erro interno ao listar tons.'
+        });
     }
 };
 
 exports.criarTom = async (req, res) => {
     try {
-        // O id_tom NÃO vem do front: quem gera é a sequence do banco
-        const nome_tom = (req.body.nome_tom || '').trim();
-
-        if (!nome_tom) {
-            return res.status(400).json({ error: 'O nome do tom é obrigatório' });
-        }
-
-        if (nome_tom.length > MAX_NOME_TOM) {
-            return res.status(400).json({
-                error: `O nome do tom deve ter no máximo ${MAX_NOME_TOM} caracteres`
-            });
-        }
+        const { nome_tom, categoriaId } = validarDados(req.body);
 
         const result = await query(
-            'INSERT INTO tom (nome_tom) VALUES ($1) RETURNING *',
-            [nome_tom]
+            `INSERT INTO tom (
+                nome_tom,
+                categoria_produto_id_categoria_produto
+            )
+            VALUES ($1, $2)
+            RETURNING *`,
+            [nome_tom, categoriaId]
         );
 
         res.status(201).json(result.rows[0]);
+
     } catch (error) {
         console.error('Erro ao criar tom:', error);
 
-        // NOT NULL violado
-        if (error.code === '23502') {
-            return res.status(400).json({ error: 'Dados obrigatórios não fornecidos' });
+        if (error.message && !error.code) {
+            return res.status(400).json({
+                error: error.message
+            });
         }
 
-        // UNIQUE violado: nome_tom repetido (ou PK, se a sequence estiver fora de sincronia)
+        if (error.code === '23503') {
+            return res.status(400).json({
+                error: 'A categoria selecionada não existe.'
+            });
+        }
+
         if (error.code === '23505') {
-            if (error.constraint && error.constraint.includes('nome_tom')) {
-                return res.status(409).json({ error: 'Já existe um tom com esse nome' });
-            }
-            return res.status(409).json({ error: 'Já existe um tom com esse ID' });
+            return res.status(409).json({
+                error: 'Já existe um tom com esses dados.'
+            });
         }
 
-        res.status(500).json({ error: 'Erro interno do servidor' });
+        res.status(500).json({
+            error: 'Erro interno ao cadastrar tom.'
+        });
     }
 };
 
 exports.obterTom = async (req, res) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = Number(req.params.id);
 
-        if (isNaN(id)) {
-            return res.status(400).json({ error: 'ID deve ser um número válido' });
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({
+                error: 'ID deve ser um número válido.'
+            });
         }
 
-        const result = await query('SELECT * FROM tom WHERE id_tom = $1', [id]);
+        const result = await query(
+            `${SELECT_TONS} WHERE t.id_tom = $1`,
+            [id]
+        );
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Tom não encontrado' });
+        if (!result.rows.length) {
+            return res.status(404).json({
+                error: 'Tom não encontrado.'
+            });
         }
 
         res.json(result.rows[0]);
+
     } catch (error) {
         console.error('Erro ao obter tom:', error);
-        res.status(500).json({ error: 'Erro interno do servidor' });
+
+        res.status(500).json({
+            error: 'Erro interno ao buscar tom.'
+        });
     }
 };
 
 exports.atualizarTom = async (req, res) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = Number(req.params.id);
 
-        if (isNaN(id)) {
-            return res.status(400).json({ error: 'ID deve ser um número válido' });
-        }
-
-        const nome_tom = (req.body.nome_tom || '').trim();
-
-        if (!nome_tom) {
-            return res.status(400).json({ error: 'O nome do tom é obrigatório' });
-        }
-
-        if (nome_tom.length > MAX_NOME_TOM) {
+        if (!Number.isInteger(id) || id <= 0) {
             return res.status(400).json({
-                error: `O nome do tom deve ter no máximo ${MAX_NOME_TOM} caracteres`
+                error: 'ID deve ser um número válido.'
             });
         }
 
+        const { nome_tom, categoriaId } = validarDados(req.body);
+
         const result = await query(
-            'UPDATE tom SET nome_tom = $1 WHERE id_tom = $2 RETURNING *',
-            [nome_tom, id]
+            `UPDATE tom
+             SET nome_tom = $1,
+                 categoria_produto_id_categoria_produto = $2
+             WHERE id_tom = $3
+             RETURNING *`,
+            [nome_tom, categoriaId, id]
         );
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Tom não encontrado' });
+        if (!result.rows.length) {
+            return res.status(404).json({
+                error: 'Tom não encontrado.'
+            });
         }
 
         res.json(result.rows[0]);
+
     } catch (error) {
         console.error('Erro ao atualizar tom:', error);
 
-        // Nome já usado por outro tom
-        if (error.code === '23505') {
-            return res.status(409).json({ error: 'Já existe um tom com esse nome' });
+        if (error.message && !error.code) {
+            return res.status(400).json({
+                error: error.message
+            });
         }
 
-        res.status(500).json({ error: 'Erro interno do servidor' });
+        if (error.code === '23503') {
+            return res.status(400).json({
+                error: 'A categoria selecionada não existe.'
+            });
+        }
+
+        res.status(500).json({
+            error: 'Erro interno ao atualizar tom.'
+        });
     }
 };
 
 exports.deletarTom = async (req, res) => {
     try {
-        const id = parseInt(req.params.id);
+        const id = Number(req.params.id);
 
-        if (isNaN(id)) {
-            return res.status(400).json({ error: 'ID deve ser um número válido' });
+        if (!Number.isInteger(id) || id <= 0) {
+            return res.status(400).json({
+                error: 'ID deve ser um número válido.'
+            });
         }
 
-        // A FK produto_tom -> tom NÃO tem ON DELETE CASCADE,
-        // então tom em uso por algum produto gera erro 23503 (tratado abaixo)
         const result = await query(
             'DELETE FROM tom WHERE id_tom = $1 RETURNING id_tom',
             [id]
         );
 
-        if (result.rows.length === 0) {
-            return res.status(404).json({ error: 'Tom não encontrado' });
-        }
-
-        res.status(204).send();
-    } catch (error) {
-        console.error('Erro ao deletar tom:', error);
-
-        // Violação de foreign key (existem produtos com esse tom)
-        if (error.code === '23503') {
-            return res.status(400).json({
-                error: 'Não é possível deletar: existem produtos associados a este tom'
+        if (!result.rows.length) {
+            return res.status(404).json({
+                error: 'Tom não encontrado.'
             });
         }
 
-        res.status(500).json({ error: 'Erro interno do servidor' });
+        res.status(204).send();
+
+    } catch (error) {
+        console.error('Erro ao deletar tom:', error);
+
+        if (error.code === '23503') {
+            return res.status(400).json({
+                error: 'Não é possível excluir este tom: ele está associado a um produto ou pedido.'
+            });
+        }
+
+        res.status(500).json({
+            error: 'Erro interno ao excluir tom.'
+        });
     }
 };

@@ -1,113 +1,181 @@
-/* CandyShop — Conferir compra */
+
+/* =========================================================
+   CANDYSHOP — CONFERÊNCIA DO PEDIDO
+========================================================= */
+
 :root {
-    --bg: #fcf8f6;
-    --surface: #fffdfc;
-    --soft: #f7ece8;
-    --text: #30282a;
-    --muted: #796c6f;
-    --pink: #c47d89;
-    --pink-dark: #9f5b67;
-    --border: #eadbd7;
-    --shadow: 0 14px 40px rgba(79, 52, 55, .10)
+    --bg: #1d171e;
+    --surface: #29202a;
+    --surface-soft: #342633;
+    --surface-hover: #40303d;
+
+    --pink: #ed78a5;
+    --pink-light: #f5b8ce;
+    --pink-soft: #563344;
+    --pink-dark: #d9578c;
+
+    --text: #fff6f9;
+    --muted: #cdbbc5;
+
+    --border: #503747;
+    --border-light: #68485b;
+
+    --transition: .22s ease;
 }
 
 * {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
     min-height: 100vh;
     margin: 0;
-    padding-bottom: 60px;
-    font-family: "DM Sans", Arial, sans-serif;
+    padding-bottom: 70px;
+
+    background: var(--bg);
     color: var(--text);
-    background: radial-gradient(circle at 5% 0%, rgba(243, 223, 226, .8), transparent 28%), var(--bg)
+
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
 header {
-    padding: 18px clamp(14px, 3vw, 42px) 18px
+    padding: 22px clamp(14px, 4vw, 65px);
 }
 
 .topo,
 .nav {
     width: min(100%, 1200px);
     margin: auto;
-    background: rgba(255, 253, 252, .92);
+
+    background: var(--surface);
     border: 1px solid var(--border);
-    box-shadow: 0 6px 20px rgba(79, 52, 55, .06)
 }
 
 .topo {
-    padding: 22px 32px;
-    border-radius: 26px
+    padding: 25px 32px;
+    border-radius: 10px 10px 0 0;
 }
 
 .topo h1 {
     margin: 0;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.8rem, 3vw, 2.7rem);
-    letter-spacing: -.04em
+
+    color: var(--pink-light);
+    font-family: Georgia, serif;
+    font-size: clamp(25px, 3vw, 35px);
+    font-weight: 600;
+    letter-spacing: -.7px;
 }
 
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
 .nav {
-    margin-top: 12px;
-    padding: 8px 16px;
-    border-radius: 20px
+    padding: 9px 18px;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
 }
 
 .nav__menu {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 8px;
+
     margin: 0;
     padding: 0;
-    list-style: none
+    list-style: none;
 }
 
 .nav__menu-item a {
     display: block;
-    padding: 12px 18px;
+    padding: 12px 19px;
+
     color: var(--muted);
     text-decoration: none;
-    border-radius: 12px;
-    font-size: .78rem;
-    font-weight: 800;
-    text-transform: uppercase
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+
+    transition: var(--transition);
 }
 
 .nav__menu-item a:hover {
-    color: var(--pink-dark);
-    background: var(--soft)
+    color: var(--pink-light);
+    background: var(--pink-soft);
 }
+
+/* =========================================================
+   ÁREA DE CONFERÊNCIA
+========================================================= */
 
 #lista-finalizar {
-    width: min(calc(100% - 32px), 1000px);
-    margin: 18px auto 0;
+    width: min(calc(100% - 36px), 1100px);
+    margin: 45px auto 0;
+
     border-collapse: collapse;
+    overflow: hidden;
+
     background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 22px;
-    overflow: hidden;
-    box-shadow: var(--shadow)
+    border-radius: 9px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .15);
 }
 
-#lista-finalizar th,
-#lista-finalizar td {
-    padding: 16px;
-    border-bottom: 1px solid #f0e7e4;
-    text-align: left
-}
+/* Cabeçalho da tabela */
 
 #lista-finalizar thead {
-    background: var(--soft);
-    color: var(--pink-dark);
-    font-size: .78rem;
-    text-transform: uppercase
+    background: var(--pink-soft);
+}
+
+#lista-finalizar th {
+    padding: 19px 17px;
+
+    color: var(--pink-light);
+    border-bottom: 1px solid var(--border-light);
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+/* Linhas */
+
+#lista-finalizar td {
+    padding: 19px 17px;
+
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+#lista-finalizar tbody tr {
+    transition: background var(--transition);
 }
 
 #lista-finalizar tbody tr:hover {
-    background: #fcf6f4
+    background: var(--surface-hover);
 }
+
+#lista-finalizar tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* Alinhamento dos valores */
 
 #lista-finalizar th:nth-child(1),
 #lista-finalizar th:nth-child(3),
@@ -115,64 +183,167 @@ header {
 #lista-finalizar td:nth-child(1),
 #lista-finalizar td:nth-child(3),
 #lista-finalizar td:nth-child(5) {
-    text-align: right
+    text-align: right;
 }
+
+/* =========================================================
+   TOTAL DO PEDIDO
+========================================================= */
 
 #total-final {
-    width: min(calc(100% - 32px), 1000px);
-    margin: 24px auto 0;
-    padding: 20px 24px;
-    background: var(--pink-light, #f3dfe2);
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    color: var(--pink-dark);
+    width: min(calc(100% - 36px), 1100px);
+    margin: 25px auto 0;
+    padding: 25px 30px;
+
+    background: var(--pink-soft);
+    border: 1px solid var(--border-light);
+    border-left: 4px solid var(--pink);
+    border-radius: 7px;
+
+    color: var(--pink-light);
+
+    font-size: clamp(19px, 2.5vw, 25px);
+    font-weight: 800;
     text-align: right;
-    font-size: 1.35rem
 }
 
+/* =========================================================
+   BOTÕES
+========================================================= */
+
 .container-botoes {
-    width: min(calc(100% - 32px), 1000px);
-    margin: 18px auto;
+    width: min(calc(100% - 36px), 1100px);
+    margin: 25px auto;
+
     display: flex;
     justify-content: space-between;
-    gap: 12px
+    align-items: center;
+    gap: 15px;
 }
 
 .container-botoes button {
-    min-height: 48px;
-    padding: 0 22px;
-    border: 0;
-    border-radius: 14px;
-    background: var(--pink-dark);
-    color: #fff;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 8px 18px rgba(159, 91, 103, .16);
-    transition: .25s
-}
+    min-height: 51px;
+    padding: 0 25px;
 
-.container-botoes button:first-child {
-    background: #eee3df;
-    color: #68575a;
-    box-shadow: none
+    border: 1px solid var(--pink);
+    border-radius: 6px;
+
+    background: var(--pink);
+    color: #321b27;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+
+    cursor: pointer;
+
+    transition:
+        background var(--transition),
+        transform var(--transition),
+        border-color var(--transition);
 }
 
 .container-botoes button:hover {
-    transform: translateY(-2px)
+    transform: translateY(-2px);
+
+    background: var(--pink-dark);
+    border-color: var(--pink-dark);
+    color: white;
 }
 
-@media(max-width:650px) {
+/* Botão voltar */
+
+.container-botoes button:first-child {
+    background: var(--surface-soft);
+    border-color: var(--border-light);
+    color: var(--pink-light);
+}
+
+.container-botoes button:first-child:hover {
+    background: var(--surface-hover);
+    border-color: var(--pink);
+    color: white;
+}
+
+/* Botão pagamento */
+
+#btn-finalizar {
+    min-width: 220px;
+
+    background: var(--pink-light);
+    border-color: var(--pink-light);
+    color: #321b27;
+}
+
+#btn-finalizar:hover {
+    background: var(--pink-dark);
+    border-color: var(--pink-dark);
+    color: white;
+}
+
+/* =========================================================
+   ACESSIBILIDADE
+========================================================= */
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid var(--pink-light);
+    outline-offset: 4px;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 700px) {
+    header {
+        padding: 14px 12px;
+    }
+
+    .topo {
+        padding: 22px 18px;
+        text-align: center;
+    }
+
+    .nav__menu-item a {
+        padding: 11px 13px;
+    }
+
     #lista-finalizar {
         display: block;
         overflow-x: auto;
-        white-space: nowrap
+        white-space: nowrap;
+    }
+
+    #lista-finalizar th,
+    #lista-finalizar td {
+        padding: 15px 13px;
+    }
+
+    #total-final {
+        padding: 20px;
     }
 
     .container-botoes {
-        flex-direction: column
+        flex-direction: column-reverse;
     }
 
     .container-botoes button {
-        width: 100%
+        width: 100%;
+    }
+
+    #btn-finalizar {
+        min-width: 0;
+    }
+}
+
+@media (max-width: 380px) {
+    .topo h1 {
+        font-size: 23px;
+    }
+
+    #total-final {
+        font-size: 18px;
     }
 }

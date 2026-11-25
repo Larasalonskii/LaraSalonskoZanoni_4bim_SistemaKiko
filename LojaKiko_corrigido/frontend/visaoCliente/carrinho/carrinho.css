@@ -1,254 +1,482 @@
-/* CandyShop — Carrinho */
+
+/* =========================================================
+   CANDYSHOP — CARRINHO DE COMPRAS
+========================================================= */
+
 :root {
-    --bg: #fcf8f6;
-    --surface: #fffdfc;
-    --soft: #f7ece8;
-    --text: #30282a;
-    --muted: #796c6f;
-    --pink: #c47d89;
-    --pink-dark: #9f5b67;
-    --pink-light: #f3dfe2;
-    --border: #eadbd7;
-    --danger: #b85f67;
-    --shadow: 0 14px 40px rgba(79, 52, 55, .10)
+    --bg: #1d171e;
+    --surface: #29202a;
+    --surface-soft: #342633;
+    --surface-hover: #40303d;
+
+    --pink: #ed78a5;
+    --pink-light: #f5b8ce;
+    --pink-soft: #563344;
+    --pink-dark: #d9578c;
+
+    --text: #fff6f9;
+    --muted: #cdbbc5;
+
+    --border: #503747;
+    --border-light: #68485b;
+
+    --danger: #e36b83;
+    --transition: .22s ease;
 }
 
 * {
-    box-sizing: border-box
+    box-sizing: border-box;
 }
 
 body {
     min-height: 100vh;
     margin: 0;
-    font-family: "DM Sans", Arial, sans-serif;
+    background: var(--bg);
     color: var(--text);
-    background: radial-gradient(circle at 5% 0%, rgba(243, 223, 226, .8), transparent 28%), var(--bg)
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* =========================================================
+   CABEÇALHO
+========================================================= */
+
 header {
-    padding: 18px clamp(14px, 3vw, 42px) 10px
+    padding: 18px clamp(14px, 4vw, 65px) 0;
 }
 
 .topo,
 .nav {
-    width: min(100%, 1200px);
+    width: min(100%, 1400px);
     margin: auto;
-    background: rgba(255, 253, 252, .92);
+
+    background: var(--surface);
     border: 1px solid var(--border);
-    box-shadow: 0 6px 20px rgba(79, 52, 55, .06)
 }
 
 .topo {
     min-height: 78px;
     padding: 16px 32px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 20px;
-    border-radius: 26px
+
+    border-radius: 10px 10px 0 0;
 }
 
 .header-titulo {
     margin: 0;
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    letter-spacing: -.04em
+
+    color: var(--text);
+    font-family: Georgia, serif;
+    font-size: clamp(25px, 3vw, 34px);
+    font-weight: 600;
+    letter-spacing: -.7px;
 }
 
 .header-titulo::first-letter {
-    color: var(--pink)
+    color: var(--pink);
 }
 
 #oUsuario {
     min-width: 160px;
-    padding: 13px 16px;
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    background: var(--soft);
+    padding: 12px 15px;
+
     color: var(--text);
-    font-weight: 700
+    background: var(--surface-soft);
+
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+
+    font-weight: 600;
+    cursor: pointer;
 }
 
+#oUsuario:focus {
+    outline: 2px solid var(--pink);
+}
+
+/* =========================================================
+   NAVEGAÇÃO
+========================================================= */
+
 .nav {
-    margin-top: 12px;
-    padding: 8px 16px;
-    border-radius: 20px
+    padding: 9px 18px;
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
 }
 
 .nav__menu {
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 8px;
+
     margin: 0;
     padding: 0;
-    list-style: none
+    list-style: none;
 }
 
 .nav__menu-item a {
     display: block;
-    padding: 12px 18px;
+    padding: 12px 19px;
+
     color: var(--muted);
     text-decoration: none;
-    border-radius: 12px;
-    font-size: .78rem;
-    font-weight: 800;
+
+    border-radius: 5px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .04em;
     text-transform: uppercase;
-    transition: .25s
+
+    transition: var(--transition);
 }
 
 .nav__menu-item a:hover {
-    color: var(--pink-dark);
-    background: var(--pink-light)
+    color: var(--pink-light);
+    background: var(--pink-soft);
 }
+
+/* =========================================================
+   CONTAINER PRINCIPAL
+========================================================= */
 
 .container {
-    width: min(calc(100% - 32px), 1100px);
-    margin: 34px auto 60px;
-    padding: clamp(20px, 4vw, 38px);
-    background: rgba(255, 253, 252, .9);
+    width: min(1200px, 92%);
+    margin: 45px auto 75px;
+    padding: clamp(22px, 4vw, 45px);
+
+    background: var(--surface);
     border: 1px solid var(--border);
-    border-radius: 26px;
-    box-shadow: var(--shadow)
+    border-radius: 10px;
+
+    box-shadow: 0 18px 45px rgba(0, 0, 0, .16);
 }
 
-.container>h1 {
-    text-align: center;
-    margin: 0 0 24px;
-    font-size: 2.2rem
+.container > h1 {
+    margin: 0 0 32px;
+
+    color: var(--pink-light);
+    text-align: left;
+    font-size: 30px;
 }
 
-table {
+.container > h1::after {
+    content: "Seu carrinho";
+    display: inline-block;
+    margin-left: 13px;
+
+    color: var(--text);
+    font-family: Georgia, serif;
+    font-size: 27px;
+    font-weight: 500;
+}
+
+/* =========================================================
+   TABELA
+========================================================= */
+
+#tabela-carrinho {
     width: 100%;
     border-collapse: collapse;
-    background: #fff;
+
+    background: var(--surface-soft);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    overflow: hidden
 }
 
-th,
-td {
-    padding: 15px 16px;
-    border-bottom: 1px solid #f0e7e4;
-    text-align: left
+#tabela-carrinho thead {
+    background: var(--pink-soft);
 }
 
-th {
-    background: var(--soft);
-    color: var(--pink-dark);
-    font-size: .75rem;
+#tabela-carrinho th {
+    padding: 17px 15px;
+
+    color: var(--pink-light);
+    border-bottom: 1px solid var(--border-light);
+
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-align: left;
     text-transform: uppercase;
-    letter-spacing: .04em
 }
 
-tbody tr:hover {
-    background: #fcf6f4
+#tabela-carrinho td {
+    padding: 17px 15px;
+
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+
+    font-size: 14px;
+    vertical-align: middle;
 }
+
+#tabela-carrinho tbody tr {
+    transition: background var(--transition);
+}
+
+#tabela-carrinho tbody tr:hover {
+    background: var(--surface-hover);
+}
+
+#tabela-carrinho tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+/* =========================================================
+   QUANTIDADE
+========================================================= */
+
+#tabela-carrinho input[type="number"] {
+    width: 76px;
+    min-height: 39px;
+    padding: 8px;
+
+    color: var(--text);
+    background: #211a23;
+
+    border: 1px solid var(--border-light);
+    border-radius: 5px;
+
+    font-weight: 700;
+    text-align: center;
+    outline: none;
+
+    transition: border-color var(--transition);
+}
+
+#tabela-carrinho input[type="number"]:focus {
+    border-color: var(--pink);
+    box-shadow: 0 0 0 3px rgba(237, 120, 165, .12);
+}
+
+/* =========================================================
+   TOTAL
+========================================================= */
 
 .total {
-    margin-top: 24px;
+    margin-top: 27px;
+    padding: 23px 25px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    color: var(--pink-light);
+    background: var(--pink-soft);
+
+    border: 1px solid var(--border-light);
+    border-radius: 7px;
+
+    font-size: 22px;
+    font-weight: 800;
     text-align: right;
-    color: var(--pink-dark);
-    font-size: 1.35rem;
-    font-weight: 850
 }
+
+/* =========================================================
+   BOTÕES
+========================================================= */
 
 .acoes {
     display: flex;
     justify-content: flex-end;
-    gap: 10px;
+    align-items: center;
     flex-wrap: wrap;
-    margin-top: 22px
+    gap: 12px;
+
+    margin-top: 25px;
 }
 
 .btn {
+    min-height: 47px;
+    padding: 0 22px;
+
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-height: 46px;
-    padding: 0 18px;
-    border: 0;
-    border-radius: 13px;
-    background: var(--pink-dark);
-    color: #fff;
-    text-decoration: none;
-    font-size: .78rem;
+
+    color: #321b27;
+    background: var(--pink);
+
+    border: 1px solid var(--pink);
+    border-radius: 6px;
+
+    font-size: 12px;
     font-weight: 800;
+    letter-spacing: .04em;
+    text-decoration: none;
+    text-transform: uppercase;
+
     cursor: pointer;
-    box-shadow: 0 8px 18px rgba(159, 91, 103, .16);
-    transition: .25s
+
+    transition:
+        background var(--transition),
+        transform var(--transition),
+        border-color var(--transition);
 }
 
-.btn:hover {
+.btn:hover:not(:disabled) {
+    color: white;
+    background: var(--pink-dark);
+    border-color: var(--pink-dark);
     transform: translateY(-2px);
-    background: #884852
+}
+
+.btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
 }
 
 .btn-limpar,
 .btn-remover {
-    background: var(--danger)
+    color: #ffdce5;
+    background: #60303f;
+    border-color: #82445b;
 }
 
-.btn-limpar:hover,
+.btn-limpar:hover:not(:disabled),
 .btn-remover:hover {
-    background: #964751
+    color: white;
+    background: #9b3f60;
+    border-color: #c35b83;
 }
+
+#btn-finalizar {
+    color: #321b27;
+    background: var(--pink-light);
+    border-color: var(--pink-light);
+}
+
+#btn-finalizar:hover:not(:disabled) {
+    color: white;
+    background: var(--pink-dark);
+    border-color: var(--pink-dark);
+}
+
+/* =========================================================
+   REMOVER PRODUTO
+========================================================= */
 
 .btn-remover {
-    border: 0;
-    border-radius: 9px;
-    color: #fff;
-    padding: 8px 10px;
-    cursor: pointer
+    padding: 9px 13px;
+
+    border: 1px solid #82445b;
+    border-radius: 5px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-input[type="number"] {
-    width: 90px;
-    padding: 9px;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    background: var(--soft)
-}
+/* =========================================================
+   VOLTAR
+========================================================= */
 
 .voltar {
     display: block;
-    margin-top: 22px;
+    margin-top: 28px;
+
     color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
     text-align: center;
     text-decoration: none;
-    font-weight: 700
+
+    transition: color var(--transition);
 }
 
 .voltar:hover {
-    color: var(--pink-dark)
+    color: var(--pink-light);
 }
 
-@media(max-width:700px) {
+/* =========================================================
+   CARRINHO VAZIO
+========================================================= */
+
+#corpo-tabela td[colspan] {
+    padding: 45px 20px !important;
+
+    color: var(--muted);
+    font-size: 15px;
+    text-align: center !important;
+}
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 800px) {
     .topo {
         padding: 18px;
         flex-direction: column;
-        text-align: center
+        text-align: center;
+    }
+
+    .nav__menu-item a {
+        padding: 11px 13px;
     }
 
     .container {
-        width: calc(100% - 20px);
-        padding: 18px;
-        overflow-x: auto
+        width: 94%;
+        padding: 20px;
+        overflow-x: auto;
+    }
+
+    #tabela-carrinho {
+        min-width: 680px;
     }
 
     .acoes {
-        justify-content: stretch
+        justify-content: stretch;
     }
 
-    .btn {
-        flex: 1
+    .acoes .btn {
+        flex: 1 1 180px;
     }
 
-    .nav__menu {
-        flex-wrap: wrap
+    .total {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 12px 10px 0;
     }
 
-    table {
-        min-width: 700px
+    .header-titulo {
+        font-size: 25px;
+    }
+
+    #oUsuario {
+        width: 100%;
+    }
+
+    .container {
+        margin-top: 25px;
+        padding: 17px;
+    }
+
+    .container > h1 {
+        font-size: 25px;
+    }
+
+    .container > h1::after {
+        font-size: 23px;
+    }
+
+    .acoes {
+        flex-direction: column;
+    }
+
+    .acoes .btn {
+        width: 100%;
+        flex: auto;
     }
 }
