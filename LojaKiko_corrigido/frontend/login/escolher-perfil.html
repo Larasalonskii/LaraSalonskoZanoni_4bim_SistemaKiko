@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Escolher acesso | Kiko Milano</title>
+  <link rel="stylesheet" href="/login/escolher-perfil.css">
+  <link rel="stylesheet" href="/alerta.css">
+</head>
+<body>
+  <main class="perfil-shell">
+    <section class="perfil-painel">
+      <span class="eyebrow">KIKO MILANO · ÁREA DE ACESSO</span>
+      <h1>Como deseja entrar?</h1>
+      <p class="subtitulo">Escolha como deseja utilizar a loja neste momento.</p>
+      <div class="opcoes">
+        <button class="perfil-card" type="button" onclick="selecionarModo('cliente')">
+          <span class="icone">🛍️</span>
+          <strong>Entrar como cliente</strong>
+          <span>Explore os produtos, veja as novidades e faça suas compras.</span>
+          <span class="acao">Acessar loja →</span>
+        </button>
+        <button class="perfil-card" type="button" onclick="selecionarModo('funcionario')">
+          <span class="icone">✦</span>
+          <strong>Entrar como funcionário</strong>
+          <span>Acesse a área de trabalho e os cadastros da loja.</span>
+          <span class="acao">Acessar área administrativa →</span>
+        </button>
+      </div>
+      <p id="mensagem" role="status"></p>
+    </section>
+  </main>
+  <script src="/alerta.js"></script>
+  <script src="/login/escolher-perfil.js"></script>
+</body>
+</html>

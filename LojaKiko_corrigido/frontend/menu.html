@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Beauty Makeup - Menu Principal</title>
+
+    <link rel="stylesheet" href="menu.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="topo">
+            <h1 class="header-titulo">
+                Kiko Milano - Menu Principal
+            </h1>
+
+            <div class="usuario-area">
+                <select id="oUsuario"
+                    aria-label="Ações do usuário"
+                    onchange="handleUserAction(this.value)">
+                    <option value="">Usuário</option>
+                    <option value="sair">Sair</option>
+                </select>
+            </div>
+        </div>
+
+        <nav class="nav" aria-label="Navegação Principal">
+            <ul class="nav__menu" role="menu">
+                <li class="nav__menu-item">
+                    <a href="/menu">Início</a>
+                </li>
+
+                <li id="itemMenuCadastros" class="nav__menu-item" hidden>
+                    <a href="/menu/cadastros">Central de Cadastros</a>
+                </li>
+
+                <li class="nav__menu-item">
+                    <a href="#sobre">Sobre nós</a>
+                </li>
+
+                <li class="nav__menu-item">
+                    <a href="#novidades">Novidades</a>
+                </li>
+
+                <li class="nav__menu-item">
+                    <a href="#contato">Contato</a>
+                </li>
+            </ul>
+
+            <button
+                id="btnVerCarrinho"
+                class="btn-ver-carrinho"
+                onclick="window.location.href='/login/visaoclientecarrinho'"
+                aria-label="Ver Carrinho de Compras">
+
+                🛒 Ver Carrinho (
+                <span id="contadorCarrinho">0</span>
+                )
+            </button>
+        </nav>
+    </header>
+
+    <main>
+
+        <section id="sobre" class="secao-institucional">
+            <h2>Sobre a Kiko Milano</h2>
+            <p>
+                Beleza, cor e criatividade para expressar seu estilo todos os dias.
+                Explore nossa seleção de maquiagens e encontre seus favoritos.
+            </p>
+        </section>
+
+        <section id="novidades" class="secao-institucional">
+            <h2>Novidades</h2>
+            <p>
+                Confira os produtos disponíveis na vitrine e descubra novas cores,
+                coleções e combinações.
+            </p>
+        </section>
+
+        <!-- BUSCA E FILTROS -->
+        <section class="vitrine-busca" aria-label="Buscar e filtrar produtos">
+
+            <div class="busca-principal">
+                <input
+                    type="search"
+                    id="buscaProduto"
+                    placeholder="Busca"
+                    aria-label="Buscar produto pelo nome"
+                    autocomplete="off">
+
+                <button
+                    type="button"
+                    id="btnBuscarProduto"
+                    class="btn-icone-busca"
+                    aria-label="Buscar">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="10.8" cy="10.8" r="7.2"></circle>
+                        <path d="m16.2 16.2 5 5"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <button
+                type="button"
+                id="abrirFiltros"
+                class="btn-abrir-filtros">
+
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 7h16M7 12h10m-7 5h4"></path>
+                </svg>
+
+                <span>Filtros</span>
+            </button>
+
+            <p id="resultadoBusca" class="resultado-busca" aria-live="polite"></p>
+
+        </section>
+
+        <!-- FUNDO ESCURO DO PAINEL -->
+        <div
+            id="fundoFiltros"
+            class="filtros-backdrop"
+            aria-hidden="true">
+        </div>
+
+        <!-- PAINEL LATERAL -->
+        <aside
+            id="painelFiltros"
+            class="painel-filtros"
+            aria-hidden="true"
+            aria-labelledby="tituloFiltros">
+
+            <div class="painel-filtros-cabecalho">
+
+                <div>
+                    <h2 id="tituloFiltros">Filtros</h2>
+                    <p>Encontre seus produtos favoritos</p>
+                </div>
+
+                <button
+                    type="button"
+                    id="fecharFiltros"
+                    class="btn-fechar-filtros"
+                    aria-label="Fechar filtros">
+                    &times;
+                </button>
+
+            </div>
+
+            <div class="painel-filtros-conteudo">
+
+                <div class="filtro-campo">
+                    <label for="filtroCategoria">Categoria</label>
+
+                    <select id="filtroCategoria">
+                        <option value="">Todas as categorias</option>
+                    </select>
+                </div>
+
+                <div class="filtro-campo">
+                    <label for="filtroColecao">Coleção</label>
+
+                    <select id="filtroColecao">
+                        <option value="">Todas as coleções</option>
+                    </select>
+                </div>
+
+                <div class="filtro-campo">
+                    <label>Faixa de preço</label>
+
+                    <div class="precos-filtros">
+
+                        <input
+                            type="number"
+                            id="precoMinimo"
+                            min="0"
+                            step="0.01"
+                            placeholder="Mínimo"
+                            aria-label="Preço mínimo">
+
+                        <span>até</span>
+
+                        <input
+                            type="number"
+                            id="precoMaximo"
+                            min="0"
+                            step="0.01"
+                            placeholder="Máximo"
+                            aria-label="Preço máximo">
+
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="painel-filtros-acoes">
+
+                <button
+                    type="button"
+                    id="limparFiltros"
+                    class="btn-limpar-filtros">
+                    Limpar
+                </button>
+
+                <button
+                    type="button"
+                    id="aplicarFiltros"
+                    class="btn-aplicar-filtros">
+                    Aplicar filtros
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- VITRINE DE PRODUTOS -->
+        <div class="carrossel-container">
+
+            <button
+                id="prev-btn"
+                class="nav-btn prev"
+                aria-label="Anterior">
+                &lt;
+            </button>
+
+            <div id="carrossel-wrapper" class="carrossel-wrapper">
+
+                <div class="mensagem-info">
+                    Carregando maquiagens...
+                </div>
+
+            </div>
+
+            <button
+                id="next-btn"
+                class="nav-btn next"
+                aria-label="Próximo">
+                &gt;
+            </button>
+
+        </div>
+
+    </main>
+
+    <section id="contato" class="secao-institucional">
+        <h2>Contato</h2>
+        <p>
+            Ficou com alguma dúvida? Entre em contato com nossa equipe
+            pelo atendimento da loja.
+        </p>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 - Kiko Milano</p>
+    </footer>
+
+    <script src="/alerta.js"></script>
+    <script src="/menu.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central de Cadastros | Kiko Milano</title>
+
+    <link rel="stylesheet" href="/cadastros/cadastros.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+
+    <header class="topo">
+        <a class="marca" href="/menu/cadastros">Kiko Milano</a>
+
+        <div class="acoes">
+            <button type="button" onclick="alterarModo('cliente')">
+                Entrar como Cliente
+            </button>
+        </div>
+    </header>
+
+    <main>
+
+        <div class="introducao">
+            <span class="eyebrow">ÁREA ADMINISTRATIVA</span>
+            <h1>Central de Cadastros</h1>
+            <p>Escolha o que deseja consultar ou gerenciar na loja.</p>
+        </div>
+
+        <section class="grade">
+
+            <a class="card" href="/pessoa/abrirCrudPessoa">
+                <span>♙</span>
+                <strong>Pessoas</strong>
+                <small>Cadastrar e gerenciar pessoas</small>
+            </a>
+
+            <a class="card" href="/cliente/abrirTabelaClientes">
+                <span>♡</span>
+                <strong>Clientes</strong>
+                <small>Consultar tabela de clientes</small>
+            </a>
+
+            <a class="card" href="/funcionario/abrirCrudFuncionario">
+                <span>♧</span>
+                <strong>Funcionários</strong>
+                <small>Cadastrar e gerenciar funcionários</small>
+            </a>
+
+            <a class="card" href="/produto/abrirCrudProduto">
+                <span>▧</span>
+                <strong>Produtos</strong>
+                <small>Gerenciar produtos da loja</small>
+            </a>
+
+            <a class="card" href="/categoria-produto/abrirCrudCategoriaProduto">
+                <span>▦</span>
+                <strong>Categorias</strong>
+                <small>Gerenciar categorias dos produtos</small>
+            </a>
+
+            <a class="card" href="/tom/abrirCrudTom">
+                <span>◉</span>
+                <strong>Tons e Cores</strong>
+                <small>Gerenciar tons e estoque</small>
+            </a>
+
+            <a class="card" href="/colecao/abrirCrudColecao">
+                <span>▤</span>
+                <strong>Coleções</strong>
+                <small>Gerenciar coleções da loja</small>
+            </a>
+
+            <a class="card" href="/pedido/abrirCrudPedido">
+                <span>▣</span>
+                <strong>Pedidos</strong>
+                <small>Consultar e gerenciar pedidos</small>
+            </a>
+
+            <a class="card" href="/pagamento/abrirCrudPagamento">
+                <span>◇</span>
+                <strong>Pagamentos</strong>
+                <small>Gerenciar pagamentos</small>
+            </a>
+
+            <a class="card" href="/forma_pagamento/abrirCrudFormaPagamento">
+                <span>▱</span>
+                <strong>Formas de pagamento</strong>
+                <small>Gerenciar formas de pagamento</small>
+            </a>
+
+            <a class="card" href="/cargo/abrirCrudCargo">
+                <span>✧</span>
+                <strong>Cargos</strong>
+                <small>Gerenciar cargos da equipe</small>
+            </a>
+
+        </section>
+
+    </main>
+
+    <div id="alertaPersonalizado" class="alerta-personalizado"></div>
+
+    <script>
+        let temporizadorAlerta;
+
+        function mostrarAlerta(mensagem) {
+            const alerta = document.getElementById('alertaPersonalizado');
+
+            alerta.textContent = '♡ ' + mensagem;
+            alerta.classList.add('mostrar');
+
+            clearTimeout(temporizadorAlerta);
+
+            temporizadorAlerta = setTimeout(() => {
+                alerta.classList.remove('mostrar');
+            }, 4000);
+        }
+
+        async function alterarModo(modo) {
+            try {
+                const resposta = await fetch('/login/selecionarModo', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ modo })
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok || dados.status !== 'ok') {
+                    throw new Error('Não foi possível alterar o modo.');
+                }
+
+                window.location.href = '/menu';
+
+            } catch (erro) {
+                mostrarAlerta(erro.message);
+            }
+        }
+    </script>
+
+</body>
+</html>

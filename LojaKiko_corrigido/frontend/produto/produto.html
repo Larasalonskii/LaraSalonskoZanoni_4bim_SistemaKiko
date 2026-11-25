@@ -1,0 +1,327 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CRUD - Produtos de Maquiagem</title>
+
+    <link rel="stylesheet" href="./produto.css">
+    <link rel="stylesheet" href="/crud-global.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+
+    <nav class="crud-topbar">
+        <a href="/menu/cadastros">← Voltar à Central de Cadastros</a>
+    </nav>
+
+    <header>
+        <h1>CRUD Produtos de Maquiagem</h1>
+    </header>
+
+    <main>
+
+        <!-- =========================================
+             FORMULÁRIO DE PRODUTO
+        ========================================== -->
+
+        <section class="form-section">
+
+            <h2>Cadastro de Produto</h2>
+
+            <form id="produtoForm">
+
+                <!-- BUSCAR E BOTÕES -->
+
+                <div class="search-container">
+
+                    <label for="searchId">Buscar por ID:</label>
+
+                    <div class="search-input-group">
+
+                        <input
+                            type="number"
+                            id="searchId"
+                            placeholder="Digite o ID para buscar"
+                            min="1"
+                        >
+
+                        <button type="button" id="btnBuscar">
+                            🔍 Buscar
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnIncluir"
+                            class="btn-primary"
+                        >
+                            Incluir
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnAlterar"
+                            class="btn-secondary"
+                            style="display:none;"
+                        >
+                            Alterar
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnExcluir"
+                            class="btn-danger"
+                            style="display:none;"
+                        >
+                            Excluir
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnSalvar"
+                            class="btn-save"
+                            style="display:none;"
+                        >
+                            Salvar
+                        </button>
+
+                        <button
+                            type="button"
+                            id="btnCancelar"
+                            class="btn-cancel"
+                        >
+                            Cancelar
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <!-- DADOS DO PRODUTO -->
+
+                <fieldset id="formFields">
+
+                    <legend>Dados do Produto</legend>
+
+                    <!-- NOME -->
+
+                    <div class="form-group">
+
+                        <label for="nome_produto">
+                            Nome do produto:
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome_produto"
+                            name="nome_produto"
+                            maxlength="80"
+                            placeholder="Ex: Base Líquida Matte"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- ESTOQUE -->
+
+                    <div class="form-group">
+
+                        <label for="quantidade_estoque_produto">
+                            Estoque (unidades):
+                        </label>
+
+                        <input
+                            type="number"
+                            id="quantidade_estoque_produto"
+                            name="quantidade_estoque_produto"
+                            min="0"
+                            step="1"
+                            value="0"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- PREÇO -->
+
+                    <div class="form-group">
+
+                        <label for="preco_unitario_produto">
+                            Preço por unidade (R$):
+                        </label>
+
+                        <input
+                            type="number"
+                            id="preco_unitario_produto"
+                            name="preco_unitario_produto"
+                            min="0"
+                            step="0.01"
+                            placeholder="Ex: 49.90"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- FOTO DO PRODUTO -->
+
+                    <div class="form-group">
+
+                        <label for="imagem_produto">
+                            Foto do produto:
+                        </label>
+
+                        <input
+                            type="file"
+                            id="imagem_produto"
+                            name="imagem_produto"
+                            accept="image/png,image/jpeg,image/webp"
+                        >
+
+                        <small>
+                            Envie uma foto JPG, PNG ou WEBP (até 10 MB).
+                        </small>
+
+                        <img
+                            id="previewImagemProduto"
+                            alt="Prévia da foto do produto"
+                            style="
+                                display:none;
+                                max-width:150px;
+                                max-height:150px;
+                                object-fit:contain;
+                                border-radius:12px;
+                                margin-top:10px;
+                            "
+                        >
+
+                    </div>
+
+                    <!-- CATEGORIA -->
+
+                    <div class="form-group">
+
+                        <label for="categoria_produto_id_categoria_produto">
+                            Categoria do produto:
+                        </label>
+
+                        <select
+                            id="categoria_produto_id_categoria_produto"
+                            name="categoria_produto_id_categoria_produto"
+                            required
+                        >
+
+                            <option value="">
+                                Selecione uma categoria
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- COLEÇÃO -->
+
+                    <div class="form-group">
+
+                        <label for="colecao_id_colecao">
+                            Coleção:
+                        </label>
+
+                        <select
+                            id="colecao_id_colecao"
+                            name="colecao_id_colecao"
+                        >
+
+                            <option value="">
+                                Sem coleção
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <!-- TONS E VARIAÇÕES -->
+
+                    <div class="tons-section">
+
+                        <h3>Tons e variações do produto</h3>
+
+                        <p>
+                            Adicione cada tom com seu próprio estoque
+                            e sua própria foto.
+                        </p>
+
+                        <div id="listaTons"></div>
+
+                        <button
+                            type="button"
+                            id="btnAdicionarTom"
+                        >
+                            + Adicionar tom
+                        </button>
+
+                    </div>
+
+                </fieldset>
+
+            </form>
+
+        </section>
+
+        <!-- =========================================
+             TABELA DE PRODUTOS
+        ========================================== -->
+
+        <section class="list-section">
+
+            <h2>Produtos cadastrados</h2>
+
+            <div class="table-container">
+
+                <table id="produtosTable">
+
+                    <thead>
+
+                        <tr>
+                            <th>ID</th>
+                            <th>Produto</th>
+                            <th>Estoque</th>
+                            <th>Preço</th>
+                            <th>Categoria</th>
+                            <th>Coleção</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="produtosTableBody">
+
+                        <!-- Dados carregados pelo JavaScript -->
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Loja de Maquiagens</p>
+    </footer>
+
+    <div
+        id="messageContainer"
+        class="message-container"
+    ></div>
+
+    <script src="/alerta.js"></script>
+    <script src="./produto.js" defer></script>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esqueceu sua senha | Kiko Milano</title>
+    <link rel="stylesheet" href="/login/login.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+<body>
+    <main class="master-container">
+        <section class="form-container">
+
+            <h2>Esqueceu sua senha?</h2>
+
+            <p>
+                Informe o e-mail vinculado à sua conta.
+                Enviaremos um código para você recuperar sua senha.
+            </p>
+
+            <form id="formRecuperacao">
+
+                <label for="emailRecuperacao">Seu e-mail</label>
+
+                <input
+                    id="emailRecuperacao"
+                    type="email"
+                    placeholder="Digite seu e-mail"
+                    required
+                    autocomplete="email"
+                >
+
+                <button type="submit" id="btnEnviar">
+                    Enviar código
+                </button>
+
+            </form>
+
+            <p id="mensagem" role="status"></p>
+
+            <p class="link-login">
+                <a href="/login">Voltar ao login</a>
+            </p>
+
+        </section>
+    </main>
+
+    <script src="/alerta.js"></script>
+    <script src="/login/esqueci-senha.js"></script>
+</body>
+</html>

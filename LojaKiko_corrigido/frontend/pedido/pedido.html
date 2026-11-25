@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD - Pedido</title>
+
+    <link rel="stylesheet" href="./pedido.css">
+    <link rel="stylesheet" href="/alerta.css">
+    <link rel="stylesheet" href="/crud-global.css">
+
+    <style>
+        .itens-table,
+        #pedidosTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        .itens-table th,
+        .itens-table td,
+        #pedidosTable th,
+        #pedidosTable td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .itens-table select,
+        .itens-table input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .total-pedido {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        #pedidosTable {
+            min-width: 950px;
+        }
+
+        .formas-pagamento {
+            min-width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="crud-topbar">
+        <a href="/menu/cadastros">← Voltar à Central de Cadastros</a>
+    </nav>
+
+    <header>
+        <h1>CRUD Pedido</h1>
+    </header>
+
+    <main>
+
+        <section class="form-section">
+
+            <h2>Cadastro de Pedido</h2>
+
+            <form id="pedidoForm">
+
+                <div class="search-container">
+
+                    <label for="searchId">Buscar por ID:</label>
+
+                    <div class="search-input-group">
+
+                        <input type="number" id="searchId" placeholder="Digite o ID para buscar" min="1">
+
+                        <button type="button" id="btnBuscar">
+                            🔍 Buscar
+                        </button>
+
+                        <button type="button" id="btnIncluir" class="btn-primary">
+                            Incluir
+                        </button>
+
+                        <button type="button" id="btnAlterar" class="btn-secondary" style="display: none;">
+                            Alterar
+                        </button>
+
+                        <button type="button" id="btnExcluir" class="btn-danger" style="display: none;">
+                            Excluir
+                        </button>
+
+                        <button type="button" id="btnSalvar" class="btn-save" style="display: none;">
+                            Salvar
+                        </button>
+
+                        <button type="button" id="btnCancelar" class="btn-cancel">
+                            Cancelar
+                        </button>
+
+                    </div>
+                </div>
+
+                <fieldset id="formFields">
+
+                    <legend>Dados do Pedido</legend>
+
+                    <div class="form-group">
+
+                        <label for="id_pedido">ID:</label>
+
+                        <input type="text" id="id_pedido" name="id_pedido" readonly disabled
+                            placeholder="Gerado automaticamente">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="data_pedido">Data do pedido:</label>
+
+                        <input type="date" id="data_pedido" name="data_pedido">
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="cliente_pessoa_cpf_pessoa">
+                            Cliente:
+                        </label>
+
+                        <select id="cliente_pessoa_cpf_pessoa" name="cliente_pessoa_cpf_pessoa" required>
+                            <option value="">Selecione um cliente</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="funcionario_pessoa_cpf_pessoa">
+                            Funcionário:
+                        </label>
+
+                        <select id="funcionario_pessoa_cpf_pessoa" name="funcionario_pessoa_cpf_pessoa" required>
+                            <option value="">Selecione um funcionário</option>
+                        </select>
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>Itens do pedido:</label>
+
+                        <div class="table-container">
+
+                            <table class="itens-table" id="itensTable">
+
+                                <thead>
+                                    <tr>
+                                        <th>Produto / Tom</th>
+                                        <th>Quantidade</th>
+                                        <th>Preço unitário</th>
+                                        <th>Subtotal</th>
+                                        <th>Ação</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="itensTableBody">
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <button type="button" id="btnAdicionarItem" class="btn-secondary" style="display: none;">
+                            + Adicionar item
+                        </button>
+
+                    </div>
+
+                    <div class="total-pedido">
+
+                        Total do pedido:
+                        <span id="totalPedido">R$ 0,00</span>
+
+                        <span id="infoPago"></span>
+
+                    </div>
+
+                    <div class="form-group pagamento-pedido">
+                        <label>Forma(s) de pagamento:</label>
+                        <div id="formasPagamentoPedido">
+                            Nenhum pagamento registrado.
+                        </div>
+                    </div>
+
+                    <p>
+                        <small>
+                            As formas de pagamento e os valores recebidos
+                            são consultados nos pagamentos vinculados
+                            a este pedido.
+                        </small>
+                    </p>
+
+                </fieldset>
+
+            </form>
+
+        </section>
+
+        <section class="list-section">
+
+            <h2>Pedidos cadastrados</h2>
+
+            <div class="table-container">
+
+                <table id="pedidosTable">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Data</th>
+                            <th>Cliente</th>
+                            <th>Funcionário</th>
+                            <th>Itens</th>
+                            <th>Total</th>
+                            <th>Pago</th>
+                            <th>Forma de pagamento</th>
+                            <th>Entregue?</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="pedidosTableBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 CRUD Pedido</p>
+    </footer>
+
+    <div id="messageContainer" class="message-container"></div>
+
+    <script src="/alerta.js"></script>
+    <script src="./pedido.js" defer></script>
+
+</body>
+
+</html>

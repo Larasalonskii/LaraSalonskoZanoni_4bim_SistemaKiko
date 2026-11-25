@@ -1,0 +1,27 @@
+.form-container.cadastro {
+    width: min(100%, 560px);
+    max-height: calc(100vh - 32px);
+    overflow-y: auto
+}
+
+.form-container.cadastro label {
+    margin-top: 4px
+}
+
+.form-container.cadastro input {
+    margin-bottom: 14px
+}
+
+.link-login {
+    margin-top: 18px !important
+}
+
+#mensagem {
+    text-align: center
+}
+
+@media(max-width:520px) {
+    .form-container.cadastro {
+        max-height: calc(100vh - 20px)
+    }
+}

@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes | Kiko Milano</title>
+
+    <link rel="stylesheet" href="/crud-global.css">
+    <link rel="stylesheet" href="/cliente/cliente_tabela.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+    <main class="container-tabela">
+        <header class="cabecalho-tabela">
+            <div>
+                <span class="eyebrow">ÁREA ADMINISTRATIVA</span>
+                <h1>Clientes</h1>
+                <p>Consulte os clientes cadastrados na loja.</p>
+            </div>
+
+            <a href="/menu/cadastros" class="btn-voltar">
+                Voltar à Central
+            </a>
+        </header>
+
+        <section class="card-tabela">
+            <div class="resumo-tabela">
+                <h2>Lista de clientes</h2>
+                <span id="totalClientes">Carregando...</span>
+            </div>
+
+            <div class="tabela-responsiva">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>CPF</th>
+                            <th>Nome</th>
+                            <th>Data de cadastro</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="clientesTableBody">
+                        <tr>
+                            <td colspan="3">Carregando clientes...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="/cliente/cliente_tabela.js"></script>
+</body>
+</html>

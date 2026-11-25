@@ -1,0 +1,115 @@
+/* 🌸 Alertas fofinhos da Kiko 🌸 */
+
+.alerta-kiko {
+    position: fixed;
+    top: 25px;
+    right: 25px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    min-width: 280px;
+    max-width: 400px;
+
+    padding: 16px 20px;
+
+    background: #ffe5e8;
+    color: #a52a3a;
+
+    border: 2px solid #f3a6b0;
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(180, 50, 70, 0.18);
+
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+
+    z-index: 99999;
+
+    animation: entrarAlerta 0.4s ease forwards;
+}
+
+/* Ícone */
+.alerta-kiko::before {
+    content: "♡";
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 30px;
+    height: 30px;
+
+    flex-shrink: 0;
+
+    background: #e85d75;
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 20px;
+}
+
+/* Botão de fechar */
+.alerta-fechar {
+    margin-left: auto;
+
+    border: none;
+    background: transparent;
+
+    color: #b54558;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.alerta-fechar:hover {
+    transform: scale(1.2);
+}
+
+/* Animação para entrar */
+@keyframes entrarAlerta {
+    from {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Animação para sair */
+.alerta-kiko.saindo {
+    animation: sairAlerta 0.4s ease forwards;
+}
+
+@keyframes sairAlerta {
+    from {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(120%);
+    }
+}
+
+/* Celular */
+@media (max-width: 500px) {
+    .alerta-kiko {
+        top: 15px;
+        right: 15px;
+        left: 15px;
+
+        min-width: auto;
+        max-width: none;
+    }
+}

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Detalhes do produto | Kiko Milano</title>
+
+    <link rel="stylesheet" href="/detalheProduto/detalheProduto.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+
+    <header class="topo-detalhe">
+
+        <a class="marca" href="/menu">
+            Kiko Milano
+        </a>
+
+        <a class="voltar" href="/menu">
+            ← Continuar comprando
+        </a>
+
+        <a class="link-carrinho" href="/login/visaoclientecarrinho">
+            🛒 Carrinho
+            <span id="contadorCarrinho">0</span>
+        </a>
+
+    </header>
+
+    <main class="pagina-produto">
+
+        <div id="carregando" class="estado">
+            Carregando produto...
+        </div>
+
+        <section id="produtoDetalhe" class="produto-detalhe" hidden>
+
+            <div class="galeria">
+
+                <div class="imagem-principal-wrap">
+
+                    <img
+                        id="imagemPrincipal"
+                        class="imagem-principal"
+                        src="/imagem-sem-foto.svg"
+                        alt="Imagem do produto"
+                    >
+
+                </div>
+
+                <div
+                    id="miniaturas"
+                    class="miniaturas"
+                    aria-label="Fotos do produto e dos tons"
+                ></div>
+
+            </div>
+
+            <div class="informacoes">
+
+                <p id="categoriaProduto" class="categoria"></p>
+
+                <h1 id="nomeProduto"></h1>
+
+                <p id="colecaoProduto" class="colecao"></p>
+
+                <p id="precoProduto" class="preco"></p>
+
+                <p class="texto-variacao">
+                    Escolha seu tom
+                </p>
+
+                <div id="gradeTons" class="grade-tons"></div>
+
+                <p id="nomeTomSelecionado" class="tom-selecionado">
+                    Selecione uma cor para ver os detalhes.
+                </p>
+
+                <p id="estoqueTom" class="estoque"></p>
+
+                <div class="quantidade-area">
+
+                    <label for="quantidade">
+                        Quantidade
+                    </label>
+
+                    <div class="controle-quantidade">
+
+                        <button
+                            type="button"
+                            id="menos"
+                            aria-label="Diminuir quantidade"
+                        >
+                            −
+                        </button>
+
+                        <input
+                            id="quantidade"
+                            type="number"
+                            min="1"
+                            value="1"
+                            disabled
+                        >
+
+                        <button
+                            type="button"
+                            id="mais"
+                            aria-label="Aumentar quantidade"
+                            disabled
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <button
+                    type="button"
+                    id="adicionarCarrinho"
+                    class="botao-adicionar"
+                    disabled
+                >
+                    Selecione um tom
+                </button>
+
+                <p class="aviso-unidade">
+                    Produto vendido por unidade.
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="/alerta.js"></script>
+    <script src="/detalheProduto/detalheProduto.js"></script>
+
+</body>
+
+</html>

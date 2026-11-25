@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuperar senha | Kiko Milano</title>
+    <link rel="stylesheet" href="/login/login.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+<body>
+    <main class="master-container">
+        <section class="form-container">
+
+            <h2>Recuperar senha</h2>
+
+            <p>
+                Digite o código de 6 números que enviamos para seu e-mail
+                e escolha uma nova senha.
+            </p>
+
+            <form id="formNovaSenha">
+
+                <label for="token">Código de recuperação</label>
+
+                <input
+                    id="token"
+                    type="text"
+                    inputmode="numeric"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    placeholder="Digite os 6 números"
+                    required
+                    autocomplete="one-time-code"
+                >
+
+                <label for="senhaNova">Nova senha</label>
+
+                <input
+                    id="senhaNova"
+                    type="password"
+                    minlength="8"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Mínimo de 8 caracteres"
+                >
+
+                <label for="confirmarSenha">Confirme a nova senha</label>
+
+                <input
+                    id="confirmarSenha"
+                    type="password"
+                    minlength="8"
+                    required
+                    autocomplete="new-password"
+                    placeholder="Digite novamente"
+                >
+
+                <button type="submit" id="btnSalvar">
+                    Alterar senha
+                </button>
+
+            </form>
+
+            <p id="mensagem" role="status"></p>
+
+            <p class="link-login">
+                <button type="button" id="btnVoltarEmail" class="btn-voltar-email">
+                    ← Voltar para informar e-mail
+                </button>
+            </p>
+
+            <p class="link-login">
+                <a href="/login">Voltar ao login</a>
+            </p>
+
+        </section>
+    </main>
+
+    <script src="/alerta.js"></script>
+    <script src="/login/redefinir-senha.js"></script>
+</body>
+</html>
