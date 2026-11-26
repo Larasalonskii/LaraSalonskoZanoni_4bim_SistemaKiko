@@ -10,6 +10,17 @@ exports.abrirTelaLogin = (req, res) => {
     res.sendFile(path.join(__dirname, '../../frontend/login/login.html'));
 };
 
+
+exports.abrirVisaoClientePedidos = (req, res) => {
+    res.sendFile(
+        path.join(
+            __dirname,
+            '../../frontend/visaoCliente/pedidos/pedidos.html'
+        )
+    );
+};
+
+
 exports.abrirEscolhaPerfil = (req, res) => {
     const usuario = lerUsuarioCookie(req);
     if (!usuario) return res.redirect('/login');
@@ -49,6 +60,29 @@ exports.exigirClienteParaPagina = (req, res, next) => {
     req.usuarioLogado = usuario;
     next();
 };
+
+
+exports.exigirClienteParaMeusPedidos = (req, res, next) => {
+    const usuario = lerUsuarioCookie(req);
+
+    const estaNoModoCliente =
+        !usuario?.ehFuncionario || usuario.modo === 'cliente';
+
+    if (
+        !usuario ||
+        !usuario.cpf_pessoa ||
+        usuario.ehCliente !== true ||
+        !estaNoModoCliente
+    ) {
+        return res.status(401).json({
+            error: 'Faça login no modo Cliente para consultar seus pedidos.'
+        });
+    }
+
+    req.usuarioLogado = usuario;
+    next();
+};
+
 
 
 // Protege a criação de pedidos pela API.

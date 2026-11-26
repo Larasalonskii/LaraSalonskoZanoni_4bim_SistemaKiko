@@ -216,6 +216,91 @@ async function buscarPrecosAtuais(client, ids) {
     return precos;
 }
 
+
+
+exports.listarMeusPedidos = async (req, res) => {
+    try {
+        // Recupera os dados do usuário logado
+        let usuario = null;
+
+        try {
+            const cookie = req.cookies?.usuarioLogado;
+
+            usuario = typeof cookie === 'string'
+                ? JSON.parse(cookie)
+                : cookie;
+        } catch (erro) {
+            console.error('Erro ao interpretar cookie do usuário:', erro);
+            usuario = null;
+        }
+
+        // Verifica se existe usuário logado
+        if (!usuario) {
+            return res.status(401).json({
+                error: 'Você precisa estar logada para consultar seus pedidos.'
+            });
+        }
+
+        // Recupera o CPF, considerando os possíveis formatos do objeto de login
+        const cpf =
+            usuario.cpf_pessoa ||
+            usuario.pessoa_cpf_pessoa ||
+            usuario.cpf ||
+            usuario.ehCliente?.pessoa_cpf_pessoa ||
+            usuario.ehCliente?.cpf_pessoa;
+
+        if (!cpf) {
+            return res.status(401).json({
+                error: 'Não foi possível identificar o CPF da sua conta. Faça login novamente.'
+            });
+        }
+
+        // Funcionário precisa estar no modo cliente
+        if (
+            usuario.ehFuncionario &&
+            usuario.modo !== 'cliente'
+        ) {
+            return res.status(403).json({
+                error: 'Altere seu perfil para Cliente para consultar seus pedidos.'
+            });
+        }
+
+        // Confirma que o CPF realmente pertence a um cliente cadastrado
+        const cliente = await query(
+            `SELECT pessoa_cpf_pessoa
+               FROM cliente
+              WHERE pessoa_cpf_pessoa = $1
+              LIMIT 1`,
+            [cpf]
+        );
+
+        if (cliente.rows.length === 0) {
+            return res.status(403).json({
+                error: 'Esta conta não possui cadastro de cliente.'
+            });
+        }
+
+        // Busca somente os pedidos pertencentes ao CPF logado
+        const resultado = await query(
+            `${SELECT_PEDIDO}
+             WHERE pe.cliente_pessoa_cpf_pessoa = $1
+             ORDER BY pe.data_pedido DESC, pe.id_pedido DESC`,
+            [cpf]
+        );
+
+        return res.status(200).json(resultado.rows);
+
+    } catch (error) {
+        console.error('Erro ao listar meus pedidos:', error);
+
+        return res.status(500).json({
+            error: 'Não foi possível carregar seus pedidos.'
+        });
+    }
+};
+
+
+
 async function inserirItens(client, idPedido, itens, precosMantidos = new Map()) {
     const precosAtuais = await buscarPrecosAtuais(
         client,

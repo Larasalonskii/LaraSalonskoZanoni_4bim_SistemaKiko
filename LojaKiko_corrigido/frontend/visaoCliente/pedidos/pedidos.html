@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meus pedidos | CandyShop</title>
+
+    <link rel="stylesheet" href="/visaoCliente/pedidos/pedidos.css">
+    <link rel="stylesheet" href="/alerta.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="topo">
+            <a href="/menu" class="marca">CandyShop</a>
+            <span class="topo-legenda">MINHA CONTA</span>
+        </div>
+
+        <nav class="nav">
+            <a href="/menu">Início</a>
+            <a href="/login/visaoclientecarrinho">Carrinho</a>
+            <a href="/login/visaoclientepedidos" class="ativo">Meus pedidos</a>
+        </nav>
+    </header>
+
+    <main class="pagina">
+
+        <section class="introducao">
+            <div>
+                <span class="sobretitulo">SUA EXPERIÊNCIA CANDYSHOP</span>
+                <h1>Meus pedidos<span>.</span></h1>
+                <p>Acompanhe suas compras e confira os detalhes de cada pedido.</p>
+            </div>
+
+            <a href="/menu" class="botao-comprar">
+                Continuar comprando
+            </a>
+        </section>
+
+        <section class="resumo">
+            <article class="resumo-card">
+                <span class="resumo-icone">♡</span>
+                <div>
+                    <span class="resumo-label">Pedidos realizados</span>
+                    <strong id="quantidade-pedidos">—</strong>
+                </div>
+            </article>
+
+            <article class="resumo-card">
+                <span class="resumo-icone">✓</span>
+                <div>
+                    <span class="resumo-label">Pedidos entregues</span>
+                    <strong id="quantidade-entregues">—</strong>
+                </div>
+            </article>
+        </section>
+
+        <section class="lista-area">
+
+            <div class="lista-cabecalho">
+                <div>
+                    <h2>Histórico de compras</h2>
+                    <p>Todos os seus pedidos em um só lugar.</p>
+                </div>
+
+                <button id="btn-atualizar" type="button">
+                    ↻ Atualizar
+                </button>
+            </div>
+
+            <div id="mensagem-carregamento" class="mensagem">
+                Carregando seus pedidos...
+            </div>
+
+            <div id="lista-pedidos" class="lista-pedidos"></div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>Com carinho, CandyShop ♡</p>
+    </footer>
+
+    <script src="/alerta.js"></script>
+    <script src="/visaoCliente/pedidos/pedido.js"></script>
+
+</body>
+</html>

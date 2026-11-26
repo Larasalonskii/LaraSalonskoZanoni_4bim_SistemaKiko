@@ -1,4 +1,3 @@
-
 const { query } = require('../database');
 const path = require('path');
 
@@ -14,24 +13,16 @@ exports.abrirCrudTom = (req, res) => {
     return res.redirect('/login');
 };
 
+// A tabela TOM possui somente ID e nome.
+// A categoria pertence ao produto.
+// A imagem pertence à variação em PRODUTO_TOM.
 const SELECT_TONS = `
-    SELECT
-        t.id_tom,
-        t.nome_tom,
-        t.categoria_produto_id_categoria_produto,
-        t.imagem_tom,
-        cp.nome_categoria_produto
-    FROM tom t
-    LEFT JOIN categoria_produto cp
-      ON cp.id_categoria_produto =
-         t.categoria_produto_id_categoria_produto
+    SELECT id_tom, nome_tom
+    FROM tom
 `;
 
-function validarDados(body) {
+function validarNomeTom(body) {
     const nome_tom = String(body.nome_tom || '').trim();
-    const categoriaId = Number(
-        body.categoria_produto_id_categoria_produto
-    );
 
     if (!nome_tom) {
         throw new Error('O nome do tom é obrigatório.');
@@ -43,20 +34,18 @@ function validarDados(body) {
         );
     }
 
-    if (!Number.isInteger(categoriaId) || categoriaId <= 0) {
-        throw new Error('Selecione a categoria deste tom.');
-    }
-
-    return { nome_tom, categoriaId };
+    return nome_tom;
 }
 
+// LISTAR TONS
 exports.listarTons = async (req, res) => {
     try {
         const result = await query(
-            `${SELECT_TONS} ORDER BY t.id_tom`
+            `${SELECT_TONS} ORDER BY id_tom`
         );
 
         res.json(result.rows);
+
     } catch (error) {
         console.error('Erro ao listar tons:', error);
 
@@ -66,18 +55,16 @@ exports.listarTons = async (req, res) => {
     }
 };
 
+// CADASTRAR TOM
 exports.criarTom = async (req, res) => {
     try {
-        const { nome_tom, categoriaId } = validarDados(req.body);
+        const nome_tom = validarNomeTom(req.body);
 
         const result = await query(
-            `INSERT INTO tom (
-                nome_tom,
-                categoria_produto_id_categoria_produto
-            )
-            VALUES ($1, $2)
-            RETURNING *`,
-            [nome_tom, categoriaId]
+            `INSERT INTO tom (nome_tom)
+             VALUES ($1)
+             RETURNING id_tom, nome_tom`,
+            [nome_tom]
         );
 
         res.status(201).json(result.rows[0]);
@@ -91,24 +78,13 @@ exports.criarTom = async (req, res) => {
             });
         }
 
-        if (error.code === '23503') {
-            return res.status(400).json({
-                error: 'A categoria selecionada não existe.'
-            });
-        }
-
-        if (error.code === '23505') {
-            return res.status(409).json({
-                error: 'Já existe um tom com esses dados.'
-            });
-        }
-
         res.status(500).json({
             error: 'Erro interno ao cadastrar tom.'
         });
     }
 };
 
+// BUSCAR TOM POR ID
 exports.obterTom = async (req, res) => {
     try {
         const id = Number(req.params.id);
@@ -120,7 +96,7 @@ exports.obterTom = async (req, res) => {
         }
 
         const result = await query(
-            `${SELECT_TONS} WHERE t.id_tom = $1`,
+            `${SELECT_TONS} WHERE id_tom = $1`,
             [id]
         );
 
@@ -141,6 +117,7 @@ exports.obterTom = async (req, res) => {
     }
 };
 
+// ALTERAR TOM
 exports.atualizarTom = async (req, res) => {
     try {
         const id = Number(req.params.id);
@@ -151,15 +128,14 @@ exports.atualizarTom = async (req, res) => {
             });
         }
 
-        const { nome_tom, categoriaId } = validarDados(req.body);
+        const nome_tom = validarNomeTom(req.body);
 
         const result = await query(
             `UPDATE tom
-             SET nome_tom = $1,
-                 categoria_produto_id_categoria_produto = $2
-             WHERE id_tom = $3
-             RETURNING *`,
-            [nome_tom, categoriaId, id]
+             SET nome_tom = $1
+             WHERE id_tom = $2
+             RETURNING id_tom, nome_tom`,
+            [nome_tom, id]
         );
 
         if (!result.rows.length) {
@@ -179,18 +155,13 @@ exports.atualizarTom = async (req, res) => {
             });
         }
 
-        if (error.code === '23503') {
-            return res.status(400).json({
-                error: 'A categoria selecionada não existe.'
-            });
-        }
-
         res.status(500).json({
             error: 'Erro interno ao atualizar tom.'
         });
     }
 };
 
+// EXCLUIR TOM
 exports.deletarTom = async (req, res) => {
     try {
         const id = Number(req.params.id);
@@ -202,7 +173,9 @@ exports.deletarTom = async (req, res) => {
         }
 
         const result = await query(
-            'DELETE FROM tom WHERE id_tom = $1 RETURNING id_tom',
+            `DELETE FROM tom
+             WHERE id_tom = $1
+             RETURNING id_tom`,
             [id]
         );
 
@@ -218,8 +191,8 @@ exports.deletarTom = async (req, res) => {
         console.error('Erro ao deletar tom:', error);
 
         if (error.code === '23503') {
-            return res.status(400).json({
-                error: 'Não é possível excluir este tom: ele está associado a um produto ou pedido.'
+            return res.status(409).json({
+                error: 'Não é possível excluir este tom porque ele está associado a um produto ou pedido.'
             });
         }
 

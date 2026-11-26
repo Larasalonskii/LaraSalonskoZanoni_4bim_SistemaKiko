@@ -1,4 +1,3 @@
-
 const path = require('path');
 const fs = require('fs/promises');
 const axios = require('axios');
@@ -12,9 +11,12 @@ const ensureUploadDir = async (req, res, next) => {
     try {
         await fs.mkdir(UPLOAD_DIR, { recursive: true });
         await fs.mkdir(TONS_DIR, { recursive: true });
+
         next();
+
     } catch (error) {
         console.error('Erro ao criar diretórios de imagens:', error);
+
         res.status(500).json({
             error: 'Erro de configuração do servidor.'
         });
@@ -23,10 +25,17 @@ const ensureUploadDir = async (req, res, next) => {
 
 async function converterParaPng(buffer) {
     const imagem = await loadImage(buffer);
+
     const canvas = createCanvas(imagem.width, imagem.height);
     const contexto = canvas.getContext('2d');
 
-    contexto.drawImage(imagem, 0, 0, imagem.width, imagem.height);
+    contexto.drawImage(
+        imagem,
+        0,
+        0,
+        imagem.width,
+        imagem.height
+    );
 
     return canvas.toBuffer('image/png');
 }
@@ -51,7 +60,7 @@ async function obterBufferImagem(req) {
     throw new Error('Envie um arquivo de imagem válido.');
 }
 
-// Mantém o upload antigo de imagem principal do produto.
+// UPLOAD DA IMAGEM PRINCIPAL DO PRODUTO
 const uploadImage = async (req, res) => {
     const { produtoId } = req.body;
 
@@ -71,6 +80,7 @@ const uploadImage = async (req, res) => {
         }
 
         const pngBuffer = await converterParaPng(buffer);
+
         const filename = `${produtoId}.png`;
         const finalPath = path.join(UPLOAD_DIR, filename);
 
@@ -81,8 +91,10 @@ const uploadImage = async (req, res) => {
             filename,
             viewUrl: `/view-image/${produtoId}`
         });
+
     } catch (error) {
         console.error('Erro ao salvar imagem do produto:', error);
+
         res.status(500).json({
             message: 'Não foi possível processar a imagem do produto.',
             error: error.message
@@ -90,18 +102,25 @@ const uploadImage = async (req, res) => {
     }
 };
 
+// EXIBIR IMAGEM PRINCIPAL DO PRODUTO
 const viewImage = async (req, res) => {
     const { produtoId } = req.params;
 
     if (!/^\d+$/.test(String(produtoId || ''))) {
-        return res.status(400).json({ message: 'ID inválido.' });
+        return res.status(400).json({
+            message: 'ID inválido.'
+        });
     }
 
-    const filePath = path.join(UPLOAD_DIR, `${produtoId}.png`);
+    const filePath = path.join(
+        UPLOAD_DIR,
+        `${produtoId}.png`
+    );
 
     try {
         await fs.access(filePath);
         res.sendFile(filePath);
+
     } catch {
         res.status(404).json({
             message: `Imagem do produto ${produtoId} não encontrada.`
@@ -109,7 +128,7 @@ const viewImage = async (req, res) => {
     }
 };
 
-// Salva a foto de uma variação específica do produto.
+// UPLOAD DA FOTO DE UMA VARIAÇÃO DO PRODUTO
 const uploadImageTom = async (req, res) => {
     const produtoTomId = Number(req.body.produtoTomId);
 
@@ -127,7 +146,7 @@ const uploadImageTom = async (req, res) => {
             FROM produto_tom pt
             JOIN produto p
                 ON p.id_produto = pt.produto_id_produto
-            JOIN categoria_produto cp
+            LEFT JOIN categoria_produto cp
                 ON cp.id_categoria_produto =
                    p.categoria_produto_id_categoria_produto
             WHERE pt.id_produto_tom = $1
@@ -149,7 +168,9 @@ const uploadImageTom = async (req, res) => {
 
         const pngBuffer = await converterParaPng(buffer);
 
-        const categoria = resultado.rows[0].nome_categoria_produto;
+        const categoria =
+            resultado.rows[0].nome_categoria_produto || 'sem-categoria';
+
         const pastaCategoria = categoria
             .normalize('NFD')
             .replace(/[\u0300-\u036f]/g, '')
@@ -157,15 +178,24 @@ const uploadImageTom = async (req, res) => {
             .replace(/[^a-z0-9]+/g, '-')
             .replace(/^-|-$/g, '');
 
-        const diretorio = path.join(TONS_DIR, pastaCategoria);
+        const diretorio = path.join(
+            TONS_DIR,
+            pastaCategoria
+        );
+
         await fs.mkdir(diretorio, { recursive: true });
 
         const filename = `tom-${produtoTomId}.png`;
-        const caminhoCompleto = path.join(diretorio, filename);
+
+        const caminhoCompleto = path.join(
+            diretorio,
+            filename
+        );
 
         await fs.writeFile(caminhoCompleto, pngBuffer);
 
-        const caminhoBanco = `produtos/${pastaCategoria}/${filename}`;
+        const caminhoBanco =
+            `produtos/${pastaCategoria}/${filename}`;
 
         await query(
             `UPDATE produto_tom
@@ -180,8 +210,10 @@ const uploadImageTom = async (req, res) => {
             imagem_produto_tom: caminhoBanco,
             viewUrl: `/imagens-produtos-tom/${caminhoBanco.replace(/^produtos\//, '')}`
         });
+
     } catch (error) {
         console.error('Erro ao salvar foto do tom:', error);
+
         res.status(500).json({
             message: 'Não foi possível salvar a foto do tom.',
             error: error.message
@@ -189,11 +221,14 @@ const uploadImageTom = async (req, res) => {
     }
 };
 
+// EXIBIR FOTO DE UMA VARIAÇÃO
 const viewImageTom = async (req, res) => {
     const produtoTomId = Number(req.params.produtoTomId);
 
     if (!Number.isInteger(produtoTomId) || produtoTomId <= 0) {
-        return res.status(400).json({ message: 'ID inválido.' });
+        return res.status(400).json({
+            message: 'ID inválido.'
+        });
     }
 
     try {
@@ -204,13 +239,18 @@ const viewImageTom = async (req, res) => {
             [produtoTomId]
         );
 
-        if (!resultado.rows.length || !resultado.rows[0].imagem_produto_tom) {
+        if (
+            !resultado.rows.length ||
+            !resultado.rows[0].imagem_produto_tom
+        ) {
             return res.status(404).json({
                 message: 'Foto deste tom não encontrada.'
             });
         }
 
-        const caminhoRelativo = resultado.rows[0].imagem_produto_tom;
+        const caminhoRelativo =
+            resultado.rows[0].imagem_produto_tom;
+
         const caminhoCompleto = path.resolve(
             TONS_DIR,
             '..',
@@ -227,6 +267,7 @@ const viewImageTom = async (req, res) => {
 
         await fs.access(caminhoCompleto);
         res.sendFile(caminhoCompleto);
+
     } catch (error) {
         res.status(404).json({
             message: 'Foto deste tom não encontrada.'

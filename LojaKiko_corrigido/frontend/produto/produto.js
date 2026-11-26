@@ -366,6 +366,20 @@ function criarLinhaTom(tom = {}) {
     const preview = document.createElement('img');
 
     preview.className = 'tom-preview';
+
+    preview.style.cssText = `
+    display: none;
+    width: 90px;
+    height: 90px;
+    max-width: 90px;
+    max-height: 90px;
+    min-width: 90px;
+    min-height: 90px;
+    object-fit: contain;
+    padding: 5px;
+    box-sizing: border-box;
+    border-radius: 12px;
+`;
     preview.alt = 'Prévia da foto do tom';
 
     if (tom.id_produto_tom && tom.imagem_produto_tom) {

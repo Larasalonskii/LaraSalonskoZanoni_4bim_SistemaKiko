@@ -1,463 +1,522 @@
 
-/* =========================================================
-   CANDYSHOP — DETALHES DO PRODUTO
-   Visual: moderno, feminino e minimalista
-========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
-    --bg: #1d171e;
-    --surface: #29202a;
-    --surface-soft: #342633;
-    --surface-hover: #40303d;
+    --bg: #100d12;
+    --surface: #1a141c;
+    --surface-2: #211824;
+    --surface-3: #2a1d2b;
 
-    --pink: #ed78a5;
-    --pink-light: #f5b8ce;
-    --pink-soft: #563344;
-    --pink-dark: #d9578c;
+    --white: #fff8fb;
+    --text: #eee2e9;
+    --muted: #b9a5b2;
 
-    --text: #fff6f9;
-    --muted: #cdbbc5;
+    --pink: #d65c8d;
+    --pink-light: #e6a1bd;
+    --pink-soft: #39202f;
+    --pink-dark: #a83e6b;
 
-    --border: #503747;
-    --border-light: #68485b;
+    --border: #392638;
+    --border-light: #52374c;
 
-    --transition: .22s ease;
+    --transition: .25s ease;
 }
 
-/* RESET */
+/* CONFIGURAÇÕES GERAIS */
 
 * {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-[hidden] {
-    display: none !important;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
-    margin: 0;
     min-height: 100vh;
-    background: var(--bg);
+    background:
+        radial-gradient(ellipse at 12% 10%, #291a29 0%, transparent 38%),
+        radial-gradient(ellipse at 90% 85%, #241522 0%, transparent 35%),
+        var(--bg);
+
     color: var(--text);
-    font-family: "Segoe UI", Arial, sans-serif;
+    font-family: 'DM Sans', sans-serif;
 }
 
-/* =========================================================
-   CABEÇALHO
-========================================================= */
+img {
+    max-width: 100%;
+}
+
+/* CABEÇALHO */
 
 .topo-detalhe {
-    min-height: 82px;
-    padding: 0 clamp(20px, 5vw, 80px);
+    min-height: 76px;
+    padding: 0 6%;
 
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 25px;
 
-    background: var(--surface);
+    background: rgba(26, 20, 28, .92);
     border-bottom: 1px solid var(--border);
-
-    position: sticky;
-    top: 0;
-    z-index: 100;
 }
 
 .marca {
-    color: var(--pink-light);
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 600;
+    letter-spacing: .3px;
     text-decoration: none;
-
-    font-family: Georgia, serif;
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: -1px;
-
-    transition: color var(--transition);
+    white-space: nowrap;
+    transition: var(--transition);
 }
 
 .marca:hover {
-    color: var(--pink);
+    color: var(--pink-light);
 }
 
-.voltar,
-.link-carrinho {
+.voltar {
     color: var(--muted);
+    font-size: 12px;
+    font-weight: 500;
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
-
-    transition: color var(--transition);
+    transition: var(--transition);
 }
 
-.voltar:hover,
-.link-carrinho:hover {
+.voltar:hover {
     color: var(--pink-light);
 }
 
 .link-carrinho {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
+    gap: 9px;
 
-    padding: 12px 18px;
+    padding: 10px 16px;
 
     background: var(--pink-soft);
     border: 1px solid var(--border-light);
-    border-radius: 8px;
+    border-radius: 4px;
 
     color: var(--pink-light);
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+
+    transition: var(--transition);
 }
 
 .link-carrinho:hover {
-    background: #693b52;
-    color: white;
+    background: var(--pink-dark);
+    border-color: var(--pink);
+    color: var(--white);
 }
 
 #contadorCarrinho {
-    min-width: 23px;
-    height: 23px;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 5px;
 
     display: inline-flex;
     align-items: center;
     justify-content: center;
 
     background: var(--pink);
-    color: #301a26;
-
     border-radius: 50%;
-    font-size: 12px;
-    font-weight: 800;
+
+    color: white;
+    font-size: 10px;
+    font-weight: 700;
 }
 
-/* =========================================================
-   ÁREA PRINCIPAL
-========================================================= */
+/* PÁGINA */
 
 .pagina-produto {
-    width: min(1320px, 92%);
-    margin: 55px auto 90px;
+    width: 90%;
+    max-width: 1250px;
+    margin: 55px auto;
 }
+
+/* CARREGAMENTO */
 
 .estado {
-    padding: 100px 20px;
-    text-align: center;
+    padding: 80px 20px;
 
     color: var(--pink-light);
-    font-size: 17px;
+    text-align: center;
+
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
 }
 
-/* =========================================================
-   ESTRUTURA DO PRODUTO
-========================================================= */
+/* DETALHES DO PRODUTO */
 
 .produto-detalhe {
     display: grid;
-    grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
-    gap: clamp(35px, 5vw, 75px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 
+    gap: 55px;
     align-items: start;
+
+    padding: 35px;
+
+    background: linear-gradient(145deg, #211824, #19131b);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+
+    box-shadow: 0 20px 55px rgba(0, 0, 0, .24);
 }
+
+/* GALERIA */
 
 .galeria {
     min-width: 0;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 15px;
 }
 
-/* =========================================================
-   IMAGEM PRINCIPAL
-========================================================= */
+/* FOTO PRINCIPAL DO PRODUTO */
 
 .imagem-principal-wrap {
     width: 100%;
-    height: min(650px, 62vw);
-    min-height: 420px;
+    max-width: 420px;
+    height: 420px;
+    max-height: 420px;
+
+    aspect-ratio: 1 / 1;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    padding: 35px;
-
-    background: #f7edf1;
-    border: 1px solid #e8cbd7;
-    border-radius: 12px;
-
     overflow: hidden;
-    position: relative;
+    margin: 0 auto;
+
+    background:
+        radial-gradient(circle at center, #382538 0%, #211824 68%, #19131b 100%);
+
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
 }
 
 .imagem-principal {
+    display: block;
+
     width: 100%;
     height: 100%;
 
+    max-width: 100%;
+    max-height: 100%;
+
+    padding: 20px;
+
     object-fit: contain;
+    object-position: center;
 
-    transition: transform .35s ease;
+    transition: none;
 }
 
-.imagem-principal-wrap:hover .imagem-principal {
-    transform: scale(1.035);
+.imagem-principal:hover {
+    transform: none;
 }
 
-/* =========================================================
-   MINIATURAS
-========================================================= */
+/* MINIATURAS DAS FOTOS */
 
 .miniaturas {
+    width: 100%;
+    max-width: 420px;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 11px;
+}
+
+/* BOTÃO DA MINIATURA */
+
+.miniaturas .miniatura {
+    width: 70px;
+    height: 70px;
+    min-width: 70px;
+    min-height: 70px;
+
+    padding: 5px;
+
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
 
-    padding: 18px 2px;
+    overflow: hidden;
 
-    overflow-x: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--pink-dark) var(--surface);
-}
-
-.miniatura {
-    flex: 0 0 86px;
-    height: 86px;
-
-    padding: 7px;
-
-    background: #f7edf1;
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    background: #211824;
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
 
     cursor: pointer;
-
-    transition:
-        border-color var(--transition),
-        transform var(--transition);
+    transition: var(--transition);
 }
 
-.miniatura:hover {
-    border-color: var(--pink);
-    transform: translateY(-3px);
-}
+/* IMAGEM DA MINIATURA */
 
-.miniatura img {
+.miniaturas .miniatura img,
+.miniaturas img {
+    display: block;
+
     width: 100%;
     height: 100%;
+
+    max-width: 100%;
+    max-height: 100%;
+
     object-fit: contain;
+    object-position: center;
 }
 
-/* =========================================================
-   INFORMAÇÕES
-========================================================= */
+.miniaturas .miniatura:hover,
+.miniaturas img:hover {
+    border-color: var(--pink);
+    background: var(--pink-soft);
+}
+
+.miniaturas img.selecionada {
+    border: 2px solid var(--pink);
+    background: var(--pink-soft);
+}
+
+/* INFORMAÇÕES DO PRODUTO */
 
 .informacoes {
-    padding: clamp(28px, 3.5vw, 46px);
-
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-
-    box-shadow: 0 18px 45px rgba(0, 0, 0, .15);
+    min-width: 0;
+    padding: 12px 5px;
 }
 
 .categoria {
-    margin: 0 0 15px;
+    margin-bottom: 13px;
 
-    color: var(--pink);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .17em;
+    color: var(--pink-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
     text-transform: uppercase;
 }
 
 .informacoes h1 {
-    margin: 0;
+    margin-bottom: 12px;
 
-    color: var(--text);
+    color: var(--white);
 
-    font-family: Georgia, serif;
-    font-size: clamp(30px, 3.5vw, 43px);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(30px, 4vw, 43px);
     font-weight: 600;
     line-height: 1.15;
     letter-spacing: -.7px;
 }
 
 .colecao {
-    margin: 12px 0 27px;
+    margin-bottom: 23px;
 
     color: var(--muted);
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: 500;
 }
-
-/* =========================================================
-   PREÇO
-========================================================= */
 
 .preco {
-    margin: 0 0 32px;
-    padding-bottom: 26px;
+    margin-bottom: 30px;
 
     color: var(--pink-light);
-    font-size: 34px;
-    font-weight: 800;
-    letter-spacing: -.8px;
-
-    border-bottom: 1px solid var(--border);
+    font-size: 29px;
+    font-weight: 700;
+    letter-spacing: -.5px;
 }
 
-/* =========================================================
-   SELEÇÃO DE TONS
-========================================================= */
+/* ESCOLHA DE TOM */
 
 .texto-variacao {
-    margin: 0 0 17px;
+    margin-bottom: 15px;
 
-    color: var(--text);
-    font-size: 17px;
-    font-weight: 700;
+    color: var(--white);
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .grade-tons {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(92px, 1fr));
+    width: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+
     gap: 12px;
+    margin-bottom: 15px;
 }
 
-.tom-opcao {
-    min-width: 0;
-    padding: 9px;
+/* CARTÕES DOS TONS */
+
+.grade-tons .tom-opcao {
+    width: 76px;
+    min-width: 76px;
+    max-width: 76px;
+
+    height: 105px;
+    min-height: 105px;
+
+    padding: 6px;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
+    justify-content: flex-start;
 
-    background: var(--surface-soft);
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    gap: 5px;
 
-    color: var(--text);
+    overflow: hidden;
+
+    background: var(--surface-3);
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
 
     cursor: pointer;
-
-    transition:
-        background var(--transition),
-        border-color var(--transition),
-        transform var(--transition);
+    transition: var(--transition);
 }
 
-.tom-opcao:hover {
-    background: var(--surface-hover);
-    border-color: var(--pink);
-    transform: translateY(-3px);
-}
+/* FOTOS DENTRO DOS CARTÕES DOS TONS */
 
-.tom-opcao.selecionado {
-    background: var(--pink-soft);
-    border: 2px solid var(--pink);
-    padding: 8px;
-}
+.grade-tons .tom-opcao img {
+    display: block;
 
-.tom-opcao img {
-    width: 100%;
-    height: 82px;
+    width: 48px !important;
+    height: 48px !important;
+
+    min-width: 48px;
+    max-width: 48px;
+
+    min-height: 48px;
+    max-height: 48px;
+
+    flex: 0 0 48px;
+
+    padding: 0;
 
     object-fit: contain;
+    object-position: center;
 
-    background: #f7edf1;
-    border-radius: 5px;
+    background: transparent;
+    border: none;
+    border-radius: 2px;
 }
 
-.tom-opcao span {
+/* NOME DOS TONS */
+
+.grade-tons .tom-opcao span {
+    display: block;
+
     width: 100%;
+    max-width: 100%;
+
+    overflow: hidden;
 
     color: var(--text);
-    font-size: 12px;
-    font-weight: 600;
+    font-size: 10px;
+    line-height: 1.2;
     text-align: center;
 
     overflow-wrap: anywhere;
 }
 
-/* =========================================================
-   TOM SELECIONADO E ESTOQUE
-========================================================= */
+/* EFEITO DOS TONS */
+
+.grade-tons .tom-opcao:hover {
+    border-color: var(--pink-light);
+    background: var(--pink-soft);
+    transform: translateY(-2px);
+}
+
+/* TOM SELECIONADO */
+
+.grade-tons .tom-opcao.selecionado,
+.grade-tons .tom-opcao.ativo {
+    border: 2px solid var(--pink-light);
+    outline: 2px solid var(--pink-dark);
+    outline-offset: 2px;
+
+    background: var(--pink-soft);
+    transform: none;
+}
+
+/* NOME DO TOM SELECIONADO */
 
 .tom-selecionado {
-    margin: 22px 0 9px;
+    min-height: 20px;
+    margin-bottom: 10px;
 
     color: var(--pink-light);
-    font-size: 14px;
-    font-weight: 700;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .estoque {
-    margin: 0 0 23px;
+    margin-bottom: 27px;
 
     color: var(--muted);
-    font-size: 13px;
+    font-size: 12px;
 }
 
-.sem-tons {
-    grid-column: 1 / -1;
-
-    padding: 16px;
-
-    color: var(--pink-light);
-    background: var(--pink-soft);
-    border: 1px solid var(--border-light);
-    border-radius: 7px;
-
-    font-size: 13px;
-}
-
-/* =========================================================
-   QUANTIDADE
-========================================================= */
+/* QUANTIDADE */
 
 .quantidade-area {
-    margin: 24px 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
+    margin-bottom: 23px;
 }
 
 .quantidade-area label {
-    color: var(--text);
-    font-size: 14px;
-    font-weight: 700;
+    display: block;
+    margin-bottom: 11px;
+
+    color: var(--white);
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .controle-quantidade {
+    width: fit-content;
+
     display: flex;
     align-items: center;
 
     overflow: hidden;
 
+    background: #130f16;
     border: 1px solid var(--border-light);
-    border-radius: 7px;
-    background: var(--surface-soft);
+    border-radius: 3px;
 }
 
 .controle-quantidade button {
-    width: 43px;
-    height: 43px;
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
 
-    border: 0;
-    background: var(--pink-soft);
+    padding: 0;
+
+    background: transparent;
+    border: none;
 
     color: var(--pink-light);
     font-size: 21px;
 
     cursor: pointer;
-    transition: background var(--transition);
+    transition: var(--transition);
 }
 
 .controle-quantidade button:hover:not(:disabled) {
-    background: var(--pink-dark);
-    color: white;
+    background: var(--pink-soft);
+    color: var(--white);
+    transform: none;
 }
 
 .controle-quantidade button:disabled {
@@ -465,208 +524,213 @@ body {
     cursor: not-allowed;
 }
 
-.controle-quantidade input {
+#quantidade {
     width: 55px;
-    height: 43px;
+    height: 42px;
+    min-height: 42px;
 
-    border: 0;
-    outline: none;
+    padding: 0;
 
-    background: var(--surface-soft);
-    color: var(--text);
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    border-radius: 0;
 
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
     text-align: center;
-    font-size: 15px;
-    font-weight: 700;
+
+    outline: none;
 }
 
-.controle-quantidade input:focus {
-    box-shadow: inset 0 0 0 1px var(--pink);
-}
-
-/* Remove setas do input number */
-
-.controle-quantidade input::-webkit-inner-spin-button,
-.controle-quantidade input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
+#quantidade::-webkit-inner-spin-button,
+#quantidade::-webkit-outer-spin-button {
     margin: 0;
+    -webkit-appearance: none;
 }
 
-.controle-quantidade input[type="number"] {
+#quantidade {
+    appearance: textfield;
     -moz-appearance: textfield;
 }
 
-/* =========================================================
-   BOTÃO ADICIONAR AO CARRINHO
-========================================================= */
+#quantidade:disabled {
+    opacity: .55;
+}
+
+/* ADICIONAR AO CARRINHO */
 
 .botao-adicionar {
     width: 100%;
-    min-height: 57px;
+    min-height: 53px;
 
-    padding: 14px 20px;
+    padding: 13px 20px;
 
+    background: linear-gradient(110deg, #a83e6b, #d65c8d);
     border: 1px solid var(--pink);
-    border-radius: 7px;
+    border-radius: 3px;
 
-    background: var(--pink);
-    color: #321b27;
+    color: var(--white);
 
-    font-size: 13px;
-    font-weight: 800;
-    letter-spacing: .07em;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
     text-transform: uppercase;
 
     cursor: pointer;
-
-    transition:
-        background var(--transition),
-        border-color var(--transition),
-        transform var(--transition);
+    transition: var(--transition);
 }
 
 .botao-adicionar:hover:not(:disabled) {
-    background: var(--pink-dark);
-    border-color: var(--pink-dark);
-    color: white;
+    background: linear-gradient(110deg, #c94d80, #e779a6);
+
+    box-shadow: 0 8px 25px rgba(214, 92, 141, .2);
 
     transform: translateY(-2px);
 }
 
 .botao-adicionar:disabled {
-    background: #594653;
-    border-color: #594653;
-    color: #c6b4bf;
+    background: #352532;
+    border-color: #493447;
+
+    color: #927b89;
 
     cursor: not-allowed;
+    box-shadow: none;
 }
 
-/* =========================================================
-   AVISO DE VENDA POR UNIDADE
-========================================================= */
+/* AVISO */
 
 .aviso-unidade {
-    margin: 17px 0 0;
+    margin-top: 15px;
 
     color: var(--muted);
-    font-size: 12px;
+    font-size: 11px;
     text-align: center;
 }
 
-/* =========================================================
-   ACESSIBILIDADE
-========================================================= */
-
-button:focus-visible,
-a:focus-visible {
-    outline: 2px solid var(--pink-light);
-    outline-offset: 4px;
-}
-
-/* =========================================================
-   RESPONSIVIDADE
-========================================================= */
+/* RESPONSIVIDADE - TABLETS */
 
 @media (max-width: 900px) {
 
     .produto-detalhe {
-        grid-template-columns: 1fr;
-        gap: 25px;
-    }
-
-    .imagem-principal-wrap {
-        height: 520px;
-    }
-
-    .informacoes {
-        padding: 30px;
+        gap: 30px;
+        padding: 25px;
     }
 
     .pagina-produto {
-        width: min(720px, 92%);
+        width: 92%;
+        margin: 40px auto;
     }
+
+    .imagem-principal-wrap {
+        max-width: 350px;
+        height: 350px;
+    }
+
+    .miniaturas {
+        max-width: 350px;
+    }
+
 }
 
-@media (max-width: 600px) {
+/* RESPONSIVIDADE - CELULARES */
+
+@media (max-width: 700px) {
 
     .topo-detalhe {
-        min-height: 72px;
-        padding: 14px 18px;
+        min-height: auto;
+        padding: 17px 5%;
 
         flex-wrap: wrap;
-        gap: 14px;
+        gap: 15px;
     }
 
     .marca {
-        font-size: 25px;
+        font-size: 22px;
     }
 
     .voltar {
         order: 3;
         width: 100%;
-        padding-top: 5px;
     }
 
-    .link-carrinho {
-        padding: 10px 13px;
-        font-size: 12px;
-    }
+    .produto-detalhe {
+        grid-template-columns: 1fr;
 
-    .pagina-produto {
-        width: 92%;
-        margin: 25px auto 55px;
-    }
-
-    .imagem-principal-wrap {
-        min-height: 300px;
-        height: 85vw;
-        max-height: 460px;
+        gap: 30px;
         padding: 20px;
     }
 
-    .miniatura {
-        flex-basis: 72px;
-        height: 72px;
+    .imagem-principal-wrap {
+        width: 100%;
+        max-width: 320px;
+        height: 320px;
+    }
+
+    .miniaturas {
+        max-width: 320px;
     }
 
     .informacoes {
-        padding: 23px 19px;
+        padding: 5px 0;
     }
 
     .informacoes h1 {
-        font-size: 31px;
+        font-size: 34px;
     }
 
-    .preco {
+    .pagina-produto {
+        margin: 28px auto;
+    }
+
+}
+
+/* CELULARES PEQUENOS */
+
+@media (max-width: 420px) {
+
+    .produto-detalhe {
+        padding: 14px;
+    }
+
+    .imagem-principal-wrap {
+        max-width: 280px;
+        height: 280px;
+    }
+
+    .miniaturas {
+        max-width: 280px;
+        gap: 8px;
+    }
+
+    .miniaturas .miniatura {
+        width: 55px;
+        height: 55px;
+        min-width: 55px;
+        min-height: 55px;
+    }
+
+    .informacoes h1 {
         font-size: 29px;
     }
 
+    .preco {
+        font-size: 25px;
+    }
+
     .grade-tons {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 9px;
     }
 
-    .tom-opcao {
-        padding: 7px;
+    .grade-tons .tom-opcao {
+        width: 70px;
+        min-width: 70px;
+        max-width: 70px;
     }
 
-    .tom-opcao img {
-        height: 72px;
-    }
-
-    .quantidade-area {
-        align-items: center;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .grade-tons {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .quantidade-area {
-        flex-direction: column;
-        align-items: flex-start;
-    }
 }

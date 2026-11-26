@@ -1,171 +1,119 @@
 
-/* =========================================================
-   CandyShop — CRUD Cargo
-   Estilo moderno, elegante e delicado
-========================================================= */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
 
 :root {
-    --bg: #fcf8f6;
-    --surface: #fffdfc;
-    --soft: #f7ece8;
+    --bg: #100d12;
+    --surface: #1a141c;
+    --surface-2: #211824;
+    --surface-3: #2a1d2b;
 
-    --text: #30282a;
-    --muted: #796c6f;
+    --white: #f5eaf0;
+    --text: #eee2e9;
+    --muted: #b9a5b2;
 
-    --pink: #c47d89;
-    --pink-dark: #9f5b67;
-    --pink-light: #f3dfe2;
+    --pink: #d65c8d;
+    --pink-light: #e6a1bd;
+    --pink-soft: #39202f;
+    --pink-dark: #a83e6b;
 
-    --border: #eadbd7;
+    --border: #392638;
+    --border-light: #52374c;
 
-    --shadow: 0 20px 55px rgba(79, 52, 55, 0.12);
-    --shadow-sm: 0 8px 24px rgba(79, 52, 55, 0.07);
-
-    --r: 26px;
-    --r-small: 13px;
-
-    --transition: 0.25s ease;
+    --transition: .22s ease;
 }
 
-
-/* =========================================================
-   RESET E BASE
-========================================================= */
-
-*,
-*::before,
-*::after {
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-}
-
-html {
-    min-height: 100%;
-    scroll-behavior: smooth;
 }
 
 body {
     min-height: 100vh;
-    margin: 0;
-
-    display: flex;
-    flex-direction: column;
-
-    font-family: "DM Sans", Arial, sans-serif;
-    color: var(--text);
-
     background:
-        radial-gradient(circle at 8% 8%, var(--pink-light) 0, transparent 28%),
-        radial-gradient(circle at 92% 90%, #f2e4de 0, transparent 30%),
+        radial-gradient(ellipse at top left, #291a29 0%, transparent 42%),
+        radial-gradient(ellipse at bottom right, #241522 0%, transparent 38%),
         var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
 }
 
-button,
-input {
-    font: inherit;
+/* BARRA SUPERIOR */
+
+.crud-topbar {
+    padding: 17px 6%;
+    background: rgba(26, 20, 28, .88);
+    border-bottom: 1px solid var(--border);
 }
 
-button {
-    border: 0;
-}
-
-::selection {
-    color: #fff;
-    background: var(--pink-dark);
-}
-
-:focus-visible {
-    outline: 3px solid rgba(196, 125, 137, 0.25);
-    outline-offset: 3px;
-}
-
-
-/* =========================================================
-   CABEÇALHO
-========================================================= */
-
-header {
-    width: min(calc(100% - 48px), 1100px);
-    margin: 24px auto 0;
-    padding: 28px 36px;
-
-    background: rgba(255, 253, 252, 0.92);
-    border: 1px solid var(--border);
-    border-radius: var(--r);
-
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(14px);
-}
-
-header h1 {
-    margin: 0;
-
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(2rem, 4vw, 2.8rem);
+.crud-topbar a {
+    color: var(--pink-light);
+    font-size: 12px;
     font-weight: 600;
-    letter-spacing: -0.04em;
+    text-decoration: none;
+    transition: var(--transition);
 }
 
-header h1::first-letter {
-    color: var(--pink);
+.crud-topbar a:hover {
+    color: var(--white);
 }
 
+/* CABEÇALHO */
 
-/* =========================================================
-   CONTEÚDO PRINCIPAL
-========================================================= */
+body > header {
+    padding: 38px 6% 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+body > header h1 {
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 46px);
+    font-weight: 600;
+    letter-spacing: -1px;
+}
+
+/* CONTEÚDO PRINCIPAL */
 
 main {
-    width: min(calc(100% - 48px), 1100px);
-    margin: 28px auto 70px;
-
-    display: grid;
-    gap: 24px;
-
-    flex: 1;
+    width: 88%;
+    max-width: 1250px;
+    margin: 35px auto 55px;
 }
 
-
-/* =========================================================
-   CARDS
-========================================================= */
+/* SEÇÕES */
 
 .form-section,
 .list-section {
-    padding: clamp(24px, 4vw, 38px);
-
-    background: rgba(255, 253, 252, 0.92);
+    margin-bottom: 28px;
+    padding: 28px;
+    background: linear-gradient(145deg, #211824, #19131b);
     border: 1px solid var(--border);
-    border-radius: var(--r);
-
-    box-shadow: var(--shadow-sm);
-    backdrop-filter: blur(14px);
+    border-radius: 5px;
+    box-shadow: 0 15px 38px rgba(0, 0, 0, .18);
 }
 
 .form-section h2 {
-    margin: 0 0 28px;
-
-    font-family: "Playfair Display", Georgia, serif;
-    font-size: clamp(1.6rem, 3vw, 2.1rem);
+    margin-bottom: 25px;
+    color: var(--white);
+    font-family: 'Playfair Display', serif;
+    font-size: 23px;
     font-weight: 600;
-    letter-spacing: -0.03em;
 }
 
-
-/* =========================================================
-   ÁREA DE BUSCA
-========================================================= */
+/* BUSCA */
 
 .search-container {
-    margin-bottom: 28px;
+    margin-bottom: 27px;
 }
 
 .search-container > label {
     display: block;
-    margin-bottom: 8px;
-
-    color: var(--muted);
-    font-size: 0.84rem;
-    font-weight: 750;
+    margin-bottom: 9px;
+    color: var(--pink-light);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .7px;
 }
 
 .search-input-group {
@@ -175,446 +123,345 @@ main {
     gap: 10px;
 }
 
-#searchId {
-    width: min(100%, 250px);
-    min-height: 50px;
-    padding: 0 16px;
+/* CAMPOS */
 
+input,
+select,
+textarea {
+    min-height: 43px;
+    padding: 10px 13px;
+    background: #130f16;
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
     color: var(--text);
-    background: var(--soft);
-
-    border: 1px solid var(--border);
-    border-radius: var(--r-small);
-
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    outline: none;
     transition: var(--transition);
 }
 
-#searchId::placeholder {
-    color: #a89b9d;
+input::placeholder {
+    color: #806d7b;
 }
 
-#searchId:focus {
-    background: #fff;
+input:focus,
+select:focus,
+textarea:focus {
+    background: #19121c;
     border-color: var(--pink);
-    outline: none;
-
-    box-shadow: 0 0 0 4px rgba(196, 125, 137, 0.1);
+    box-shadow: 0 0 0 3px rgba(214, 92, 141, .10);
 }
 
+/* ID AUTOMÁTICO */
 
-/* =========================================================
-   BOTÕES
-========================================================= */
+#id_forma_pagamento {
+    max-width: 180px;
+    background: #211923;
+    border-color: #302230;
+    color: var(--muted);
+    cursor: not-allowed;
+}
 
-.search-input-group button {
-    min-height: 48px;
-    padding: 0 18px;
+/* CAMPO DE BUSCA */
 
-    border-radius: 13px;
+#searchId {
+    width: 240px;
+    max-width: 100%;
+}
 
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.02em;
+/* BOTÕES */
 
+button {
+    min-height: 40px;
+    padding: 0 17px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
     cursor: pointer;
-
-    transition:
-        transform var(--transition),
-        box-shadow var(--transition),
-        background var(--transition);
+    transition: var(--transition);
 }
 
-.search-input-group button:hover {
+button:hover {
     transform: translateY(-2px);
 }
 
-.search-input-group button:active {
-    transform: translateY(0);
-}
-
-
-/* Botão Buscar */
+/* BUSCAR */
 
 #btnBuscar {
-    color: var(--pink-dark);
-    background: var(--pink-light);
+    background: var(--surface-3);
+    border-color: var(--border-light);
+    color: var(--pink-light);
 }
 
 #btnBuscar:hover {
-    background: #edd3d7;
-    box-shadow: 0 8px 20px rgba(159, 91, 103, 0.12);
+    background: var(--pink-soft);
+    border-color: var(--pink);
+    color: var(--white);
 }
 
+/* INCLUIR */
 
-/* Botão Incluir */
-
-.btn-primary,
-#btnIncluir {
-    color: #fff;
-
-    background: linear-gradient(
-        135deg,
-        var(--pink),
-        var(--pink-dark)
-    );
-
-    box-shadow: 0 8px 18px rgba(159, 91, 103, 0.18);
+.btn-primary {
+    background: var(--pink-dark);
+    border-color: var(--pink-dark);
+    color: var(--white);
 }
 
-.btn-primary:hover,
-#btnIncluir:hover {
-    box-shadow: 0 13px 26px rgba(159, 91, 103, 0.25);
+.btn-primary:hover {
+    background: var(--pink);
+    border-color: var(--pink);
 }
 
+/* ALTERAR */
 
-/* Botão Alterar */
-
-.btn-secondary,
-#btnAlterar {
-    color: var(--text);
-    background: #eee4e0;
-
-    border: 1px solid var(--border);
+.btn-secondary {
+    background: #302536;
+    border-color: #594052;
+    color: #e6c3d2;
 }
 
-.btn-secondary:hover,
-#btnAlterar:hover {
-    background: #e6d8d3;
+.btn-secondary:hover {
+    background: #493044;
+    border-color: var(--pink-light);
 }
 
+/* EXCLUIR */
 
-/* Botão Excluir */
-
-.btn-danger,
-#btnExcluir {
-    color: #fff;
-    background: #b9626b;
-
-    box-shadow: 0 8px 18px rgba(185, 98, 107, 0.16);
+.btn-danger {
+    background: #49202c;
+    border-color: #713247;
+    color: #f0a6b5;
 }
 
-.btn-danger:hover,
-#btnExcluir:hover {
-    background: #a64e58;
+.btn-danger:hover {
+    background: #692b3d;
+    border-color: #b94d6d;
 }
 
+/* SALVAR */
 
-/* Botão Salvar */
-
-.btn-save,
-#btnSalvar {
-    color: #fff;
-    background: #829d8a;
-
-    box-shadow: 0 8px 18px rgba(130, 157, 138, 0.16);
+.btn-save {
+    background: #493047;
+    border-color: #754665;
+    color: #f4c4dc;
 }
 
-.btn-save:hover,
-#btnSalvar:hover {
-    background: #6f8a77;
+.btn-save:hover {
+    background: #633d59;
+    border-color: var(--pink);
 }
 
+/* CANCELAR */
 
-/* Botão Cancelar */
-
-.btn-cancel,
-#btnCancelar {
-    color: var(--muted);
+.btn-cancel {
     background: transparent;
-
-    border: 1px solid var(--border);
+    border-color: var(--border-light);
+    color: var(--muted);
 }
 
-.btn-cancel:hover,
-#btnCancelar:hover {
-    color: var(--text);
-    background: var(--soft);
+.btn-cancel:hover {
+    background: var(--surface-3);
+    color: var(--white);
 }
 
+/* FORMULÁRIO */
 
-/* =========================================================
-   FORMULÁRIO
-========================================================= */
-
-#formFields {
-    margin: 0;
-    padding: 28px;
-
-    background: rgba(247, 236, 232, 0.55);
-
-    border: 1px solid var(--border);
-    border-radius: 20px;
+fieldset {
+    min-width: 0;
+    padding: 24px;
+    border: 1px solid var(--border-light);
+    border-radius: 4px;
 }
 
-#formFields legend {
+legend {
     padding: 0 10px;
-
-    color: var(--pink-dark);
-
-    font-size: 0.85rem;
-    font-weight: 800;
+    color: var(--pink-light);
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 600;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 9px;
+    margin-bottom: 21px;
+}
 
-    max-width: 600px;
+.form-group:last-child {
+    margin-bottom: 0;
 }
 
 .form-group label {
     color: var(--muted);
-
-    font-size: 0.84rem;
-    font-weight: 750;
+    font-size: 12px;
+    font-weight: 600;
 }
 
 .form-group input {
     width: 100%;
-    min-height: 50px;
-    padding: 0 16px;
-
-    color: var(--text);
-    background: var(--surface);
-
-    border: 1px solid var(--border);
-    border-radius: var(--r-small);
-
-    transition:
-        background var(--transition),
-        border-color var(--transition),
-        box-shadow var(--transition);
+    max-width: 550px;
 }
 
-.form-group input:focus {
-    background: #fff;
-    border-color: var(--pink);
+/* LISTAGEM */
 
-    outline: none;
-
-    box-shadow: 0 0 0 4px rgba(196, 125, 137, 0.1);
+.list-section {
+    padding: 22px;
 }
-
-
-/* =========================================================
-   TABELA
-========================================================= */
 
 .table-container {
     width: 100%;
     overflow-x: auto;
-
-    background: var(--surface);
-
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 4px;
+}
 
-    box-shadow: 0 4px 14px rgba(79, 52, 55, 0.03);
+.table-container::-webkit-scrollbar {
+    height: 7px;
+}
+
+.table-container::-webkit-scrollbar-track {
+    background: var(--surface);
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: var(--pink-dark);
+    border-radius: 10px;
 }
 
 table {
     width: 100%;
+    min-width: 500px;
     border-collapse: collapse;
-
-    font-size: 0.88rem;
+    text-align: left;
 }
 
 thead {
-    background: var(--soft);
+    background: #291c2b;
 }
 
 th {
-    padding: 17px 20px;
-
-    color: var(--pink-dark);
-
-    border-bottom: 1px solid var(--border);
-
-    text-align: left;
-
-    font-size: 0.74rem;
-    font-weight: 850;
-    letter-spacing: 0.04em;
+    padding: 16px 19px;
+    color: var(--pink-light);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.3px;
     text-transform: uppercase;
+    border-bottom: 1px solid var(--border-light);
+}
+
+tbody {
+    background: #19131b;
 }
 
 td {
-    padding: 16px 20px;
-
-    color: var(--muted);
-
-    border-bottom: 1px solid #f1e8e5;
-}
-
-tbody tr {
+    padding: 15px 19px;
+    color: var(--text);
+    font-size: 13px;
+    border-bottom: 1px solid #302230;
     transition: background var(--transition);
-}
-
-tbody tr:hover {
-    background: #fdf7f5;
 }
 
 tbody tr:last-child td {
     border-bottom: none;
 }
 
-
-/* =========================================================
-   MENSAGENS
-========================================================= */
-
-.message-container {
-    position: fixed;
-    right: 20px;
-    bottom: 20px;
-    z-index: 1000;
-
-    width: min(360px, calc(100% - 40px));
-
-    text-align: center;
-
-    pointer-events: none;
+tbody tr:hover {
+    background: #241925;
 }
 
-.message-container > * {
-    padding: 16px 18px;
-
-    color: var(--text);
-    background: rgba(255, 253, 252, 0.96);
-
-    border: 1px solid var(--border);
-    border-radius: 14px;
-
-    box-shadow: var(--shadow);
+tbody tr:hover td {
+    color: var(--white);
 }
 
+/* BOTÃO DE ID NA TABELA */
 
-/* =========================================================
-   RODAPÉ
-========================================================= */
+button.btn-id {
+    min-height: auto;
+    padding: 4px 9px;
+    background: #302030;
+    color: var(--pink-light);
+    border: 1px solid var(--border-light);
+    border-radius: 3px;
+    font-size: 12px;
+    box-shadow: none;
+}
+
+button.btn-id:hover {
+    background: var(--pink-soft);
+    border-color: var(--pink-dark);
+    color: var(--white);
+    transform: none;
+    box-shadow: none;
+}
+
+/* RODAPÉ */
 
 footer {
-    margin-top: auto;
-    padding: 32px 20px;
-
-    color: #faeeee;
-
-    background: linear-gradient(
-        135deg,
-        #68484d,
-        #4e363a
-    );
-
-    border-radius: 28px 28px 0 0;
-
+    padding: 20px;
+    background: #19121a;
+    border-top: 1px solid var(--border);
     text-align: center;
 }
 
 footer p {
-    margin: 0;
-
-    font-size: 0.78rem;
-    letter-spacing: 0.04em;
+    color: var(--muted);
+    font-size: 11px;
 }
 
+/* MENSAGENS */
 
-/* =========================================================
-   RESPONSIVIDADE
-========================================================= */
+.message-container {
+    color: var(--text);
+}
 
-@media (max-width: 800px) {
+/* RESPONSIVIDADE */
 
-    header,
+@media (max-width: 768px) {
     main {
-        width: calc(100% - 28px);
+        width: 92%;
+        margin-top: 25px;
     }
 
-    header {
-        margin-top: 14px;
-        padding: 24px;
-    }
-
-    main {
-        margin-top: 18px;
-        margin-bottom: 50px;
+    body > header {
+        padding: 30px 5% 23px;
     }
 
     .form-section,
     .list-section {
-        padding: 24px 20px;
+        padding: 20px;
     }
 
     .search-input-group {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
+        align-items: stretch;
     }
 
     #searchId {
         width: 100%;
-        grid-column: 1 / -1;
-    }
-
-    .search-input-group button {
-        width: 100%;
-    }
-
-    #formFields {
-        padding: 22px 18px;
     }
 }
 
-
-@media (max-width: 520px) {
-
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .form-section h2 {
-        font-size: 1.65rem;
-    }
-
-    .search-input-group {
-        grid-template-columns: 1fr;
+@media (max-width: 480px) {
+    main {
+        width: 94%;
     }
 
     .form-section,
     .list-section {
-        border-radius: 22px;
+        padding: 15px;
     }
 
-    #formFields {
-        padding: 20px 16px;
-        border-radius: 16px;
+    fieldset {
+        padding: 17px;
     }
 
-    .message-container {
-        right: 12px;
-        bottom: 12px;
-
-        width: calc(100% - 24px);
+    .search-input-group button {
+        flex: 1 1 42%;
     }
 
-    footer {
-        border-radius: 22px 22px 0 0;
-    }
-}
-
-
-/* =========================================================
-   ACESSIBILIDADE
-========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        scroll-behavior: auto !important;
-
-        transition-duration: 0.01ms !important;
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
+    .form-group input {
+        max-width: 100%;
     }
 }

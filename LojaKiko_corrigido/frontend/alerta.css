@@ -1,4 +1,6 @@
-/* 🌸 Alertas fofinhos da Kiko 🌸 */
+/* =========================================================
+   KIKO MILANO — ALERTAS DARK BEAUTY BOUTIQUE
+========================================================= */
 
 .alerta-kiko {
     position: fixed;
@@ -7,72 +9,85 @@
 
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
 
+    width: max-content;
     min-width: 280px;
-    max-width: 400px;
+    max-width: min(420px, calc(100vw - 40px));
 
     padding: 16px 20px;
 
-    background: #ffe5e8;
-    color: #a52a3a;
+    background: linear-gradient(135deg, #211824, #30202f);
+    color: #f5eaf0;
 
-    border: 2px solid #f3a6b0;
-    border-radius: 18px;
+    border: 1px solid #684052;
+    border-left: 4px solid #d65c8d;
+    border-radius: 8px;
 
-    box-shadow: 0 8px 25px rgba(180, 50, 70, 0.18);
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.45),
+        0 0 18px rgba(214, 92, 141, 0.08);
 
-    font-family: Arial, sans-serif;
+    font-family: 'DM Sans', Arial, sans-serif;
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
+    line-height: 1.5;
 
     z-index: 99999;
 
     animation: entrarAlerta 0.4s ease forwards;
 }
 
-/* Ícone */
+/* ÍCONE */
+
 .alerta-kiko::before {
     content: "♡";
+
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 30px;
-    height: 30px;
+    width: 34px;
+    height: 34px;
 
     flex-shrink: 0;
 
-    background: #e85d75;
-    color: white;
+    background: rgba(214, 92, 141, 0.15);
+    color: #e6a1bd;
 
-    border-radius: 50%;
+    border: 1px solid rgba(214, 92, 141, 0.35);
+    border-radius: 7px;
 
-    font-size: 20px;
+    font-size: 21px;
 }
 
-/* Botão de fechar */
+/* BOTÃO DE FECHAR */
+
 .alerta-fechar {
     margin-left: auto;
+    padding: 2px 4px;
 
     border: none;
+    outline: none;
     background: transparent;
 
-    color: #b54558;
+    color: #b9a5b2;
 
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 21px;
+    font-weight: 400;
 
     cursor: pointer;
 
-    transition: transform 0.2s ease;
+    transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .alerta-fechar:hover {
-    transform: scale(1.2);
+    color: #e6a1bd;
+    transform: scale(1.15);
 }
 
-/* Animação para entrar */
+/* ENTRADA */
+
 @keyframes entrarAlerta {
     from {
         opacity: 0;
@@ -85,7 +100,8 @@
     }
 }
 
-/* Animação para sair */
+/* SAÍDA */
+
 .alerta-kiko.saindo {
     animation: sairAlerta 0.4s ease forwards;
 }
@@ -102,14 +118,25 @@
     }
 }
 
-/* Celular */
+/* CELULAR */
+
 @media (max-width: 500px) {
     .alerta-kiko {
         top: 15px;
         right: 15px;
         left: 15px;
 
-        min-width: auto;
+        width: auto;
+        min-width: 0;
         max-width: none;
+
+        padding: 14px 16px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .alerta-kiko,
+    .alerta-kiko.saindo {
+        animation-duration: 0.01ms;
     }
 }

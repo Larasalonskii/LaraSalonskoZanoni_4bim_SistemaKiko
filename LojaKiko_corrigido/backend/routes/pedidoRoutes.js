@@ -21,6 +21,16 @@ router.post(
     pedidoController.criarPedido
 );
 
+
+
+router.get(
+    '/meus-pedidos',
+    loginController.exigirClienteParaMeusPedidos,
+    pedidoController.listarMeusPedidos
+);
+
+
+
 router.get('/:id', pedidoController.obterPedido);
 
 router.put('/:id', pedidoController.atualizarPedido);
